@@ -1,0 +1,26 @@
+isa-calendar
+
+Not available to public. Only University of Michigan community
+
+Integrate calendar
+
+Calendar ID
+c_fa902433cff73e06c0088c4ef14469d75eff589a9256f5e675e23316ccf4da0c@group.calendar.google.com
+
+Public URL to this calendar
+https://calendar.google.com/calendar/embed?src=c_fa902433cff73e06c0088c4ef14469d75eff589a9256f5e675e23316ccf4da0c%40group.calendar.google.com&ctz=America%2FNew_York
+Use this URL to access this calendar from a web browser.
+
+
+Embed Code
+<iframe src="https://calendar.google.com/calendar/embed?src=c_fa902433cff73e06c0088c4ef14469d75eff589a9256f5e675e23316ccf4da0c%40group.calendar.google.com&ctz=America%2FNew_York" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+Use this code to embed this calendar in a web page.
+You can customize the code or embed multiple calendars.
+
+
+
+public address in iCal format
+https://calendar.google.com/calendar/ical/c_fa902433cff73e06c0088c4ef14469d75eff589a9256f5e675e23316ccf4da0c%40group.calendar.google.com/public/basic.ics
+
+secret address in iCal format
+[ask me for it]
