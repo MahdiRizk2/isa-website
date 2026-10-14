@@ -1,0 +1,28 @@
+# Reference material (local only, never committed)
+_source/
+
+# Dependencies and build output
+node_modules/
+dist/
+build/
+.next/
+.astro/
+.vercel/
+.netlify/
+
+# Env and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/*
+!.vscode/extensions.json
+.idea/
