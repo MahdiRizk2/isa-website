@@ -26,3 +26,11 @@ desktop.ini
 .vscode/*
 !.vscode/extensions.json
 .idea/
+
+# Design handoff: only the spec is committed (README, content.json, template)
+# content-sources/ holds internal finances and procedures; this repo is public.
+design_handoff/content-sources/
+design_handoff/screenshots/
+design_handoff/assets/
+design_handoff/design/*.dc.html
+design_handoff/design/support.js

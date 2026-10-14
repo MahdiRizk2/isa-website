@@ -1,0 +1,52 @@
+{
+  "org": {
+    "name": "Islamic Society of Ahlulbayt",
+    "short": "ISA",
+    "university": "University of Michigan, Ann Arbor",
+    "tagline": "Shia Muslim student org · U-M Ann Arbor",
+    "mission": "The mission of the Islamic Society of Ahlulbayt at the University of Michigan is to provide a welcoming space for Muslims and other interested individuals to learn, connect, and serve in accordance with the teachings of the Quran, the Prophet (SAW), and the Ahlulbayt (AS).",
+    "mission_extended": [
+      "ISA is established for the express purpose of providing an atmosphere of reflection and contemplation for interested individuals, in accordance with the sacred teachings of Islam. We are a core member of our Muslim community at U-M and firmly stand against Islamophobic and anti-Shi'i sentiment.",
+      "We do this through raising awareness, discussions, social events, fundraisers, and speaker events."
+    ],
+    "coalition": "A member of the Muslim Coalition"
+  },
+  "links": {
+    "members_chat": "https://chat.whatsapp.com/Li8ja19zrimIqmMQh3dR1q",
+    "updates_chat": "https://chat.whatsapp.com/EmKiNXPl1C09mv0xv0ZJdj",
+    "instagram": "https://instagram.com/isahlulbayt",
+    "instagram_handle": "@isahlulbayt",
+    "email": "isamuslimsE-board@umich.edu",
+    "discussion_resources": "https://docs.google.com/document/d/19GiaLgPL3KxK_owh6r6rkE2-YesWw363Y4e9jEJTRTY/edit?tab=t.0",
+    "request_topic_form": "https://docs.google.com/forms/d/1-Oih5Rdeo2jZlh3VfugpvSD_1GpnLlm_TVRZJ2sABIw/viewform?edit_requested=true",
+    "book_club_form": "https://forms.gle/ppPsANZzo3xd35o69",
+    "playlist": "https://youtube.com/playlist?list=PL0oWxW-cn1qdQ3CzG7ltpK5i3q9XSjDUH&si=bhkO-5vR0PtuMnXK",
+    "calendar_id": "c_fa902433cff73e06c0088c4ef14469d75eff589a9256f5e675e23316ccf4da0c@group.calendar.google.com",
+    "calendar_embed": "https://calendar.google.com/calendar/embed?src=c_fa902433cff73e06c0088c4ef14469d75eff589a9256f5e675e23316ccf4da0c%40group.calendar.google.com&ctz=America%2FNew_York",
+    "calendar_ical": "https://calendar.google.com/calendar/ical/c_fa902433cff73e06c0088c4ef14469d75eff589a9256f5e675e23316ccf4da0c%40group.calendar.google.com/public/basic.ics",
+    "donate": null,
+    "mailing_list": null,
+    "sisterhood_chat": null,
+    "brotherhood_chat": null
+  },
+  "programs": [
+    { "slug": "dua-kumayl-discussion", "cadence": "Every Thursday", "title": "Dua Kumayl & Discussion", "short": "Our most loved and consistent program. Dua, then a student-led discussion.", "long": "Our most loved and consistent program. We recite Dua Kumayl together, then move into a student-led discussion on a topic chosen by members. Topics range across faith, practice, history, and campus life.", "photo": "P1090361.png", "featured": true },
+    { "slug": "book-club-dua-tawassul", "cadence": "Every other Tuesday", "title": "Book Club & Dua Tawassul", "short": "Read together, talk it through, recite Dua Tawassul.", "long": "We read a book together over the semester and talk it through a section at a time, then close with Dua Tawassul. Members pick the next book.", "photo": "8b4e641d.png" },
+    { "slug": "sisterhood-brotherhood", "cadence": "Monthly", "title": "Sisterhood & Brotherhood", "short": "Sports nights, picnics, game nights, watch parties.", "long": "At least one sisterhood and one brotherhood event a month: game nights, sports, picnics, watch parties, hikes, and outings. The easiest way to get to know people outside the program room.", "photo": "IMG_7767.png" },
+    { "slug": "speaker-events", "cadence": "Through the year", "title": "Speaker events", "short": "Invited speakers, lectures, and dinner.", "long": "Invited scholars and speakers on campus, usually with dinner. Announced a few weeks ahead." },
+    { "slug": "commemorations", "cadence": "Islamic calendar", "title": "Commemorations", "short": "Eid al-Ghadeer, Fatimiyya, birth anniversaries of the Ahlulbayt (AS).", "long": "Programs and gatherings marking major dates for the Ahlulbayt (AS)." },
+    { "slug": "ramadan", "cadence": "Ramadan", "title": "Iftars & Laylatul Qadr", "short": "Community iftars, Quran circles, Nights of Power.", "long": "Our busiest month: community iftars, nightly programs, and the Nights of Power on campus." }
+  ],
+  "support_enables": [
+    { "label": "WEEKLY", "title": "Religious programming", "body": "Dua Kumayl, Dua Tawassul, discussion, and the equipment that runs them every week." },
+    { "label": "SPEAKERS", "title": "Guest speakers and dinner", "body": "Honoraria and food for lecture nights open to the whole campus." },
+    { "label": "LEARNING", "title": "Books and materials", "body": "Physical copies for Book Club and resources that currently sit behind paywalls." },
+    { "label": "RAMADAN", "title": "Iftars and lectures", "body": "Catered community iftars and Laylatul Qadr programs, our largest expense of the year." }
+  ],
+  "board_2026_27": [
+    ["Syed Hani Reza", "Co-President"], ["Zeinab Musa", "Co-President"], ["Noor Khanafer", "External Relations"], ["Malak Bazzi", "Finance Chair"],
+    ["Ahmad Nasser", "Alumni Chair"], ["Sana Razvi", "Logistics Chair"], ["Ava Faraj", "Marketing"], ["Sabeen Fakih", "Marketing"],
+    ["Ali Berry", "Recitation Chair"], ["Khadeja Rizvi", "Co-Discussion Chair"], ["Abdulaziz Alkhalisi", "Co-Discussion Chair"], ["Jenna Saeed", "Book Club Chair"],
+    ["Amany Sayed", "Co-Sisterhood Chair"], ["Jenna Charara", "Co-Sisterhood Chair"], ["Mohamed Yahya", "Co-Brotherhood Chair"], ["Jawad Hamade", "Co-Brotherhood Chair"]
+  ]
+}
