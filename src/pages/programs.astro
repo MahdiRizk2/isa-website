@@ -1,0 +1,341 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Placeholder from '../components/Placeholder.astro';
+import content from '../data/content.json';
+import { photo } from '../data/photos';
+import { links } from '../lib/site';
+
+const [thursday, bookClub, socials] = content.programs;
+const currentBook = content.details.current_book;
+---
+
+<Base
+  title="Programs"
+  description="What a semester at ISA looks like: Dua Kumayl and discussion every Thursday, Book Club and Dua Tawassul, sisterhood and brotherhood events, speakers, commemorations, and Ramadan."
+>
+  <section class="intro wrap" aria-labelledby="programs-title">
+    <span class="eyebrow">Programs</span>
+    <h1 id="programs-title" class="page-title">What a semester at ISA looks like</h1>
+    <p class="lead">Everything is open to everyone. No prior knowledge, membership, or dues needed. Rooms and times are posted in the Updates chat each semester.</p>
+  </section>
+
+  <section class="feature wrap" aria-labelledby="p-thursday">
+    <div class="feature-photo media">
+      <Photo photo={photo(thursday!.photo!)} sizes="(min-width: 1200px) 528px, (min-width: 900px) 45vw, 100vw" priority />
+    </div>
+    <div class="feature-text">
+      <span class="eyebrow eyebrow--sm">{thursday!.cadence}</span>
+      <h2 id="p-thursday">{thursday!.title}</h2>
+      <p>{thursday!.long}</p>
+      <div class="actions">
+        <a class="btn btn--outline" href={links.discussion_resources} target="_blank" rel="noopener">Discussion resources</a>
+        <a class="btn btn--outline" href={links.request_topic_form} target="_blank" rel="noopener">Request a topic</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature feature--flip wrap" aria-labelledby="p-book">
+    <div class="feature-photo media">
+      <Photo photo={photo(bookClub!.photo!)} sizes="(min-width: 1200px) 528px, (min-width: 900px) 45vw, 100vw" />
+    </div>
+    <div class="feature-text">
+      <span class="eyebrow eyebrow--sm">{bookClub!.cadence}</span>
+      <h2 id="p-book">{bookClub!.title}</h2>
+      <p>{bookClub!.long}</p>
+      <div class="actions">
+        <a class="btn btn--outline" href={links.book_club_form} target="_blank" rel="noopener">Suggest a book</a>
+        {currentBook ? <span class="current-book">Reading now: {currentBook}</span> : <Placeholder>[Current book]</Placeholder>}
+      </div>
+    </div>
+  </section>
+
+  <section class="feature wrap" aria-labelledby="p-socials">
+    <div class="feature-photo media">
+      <Photo photo={photo(socials!.photo!)} sizes="(min-width: 1200px) 528px, (min-width: 900px) 45vw, 100vw" />
+    </div>
+    <div class="feature-text">
+      <span class="eyebrow eyebrow--sm">{socials!.cadence}</span>
+      <h2 id="p-socials">{socials!.title}</h2>
+      <p>{socials!.long}</p>
+      <div class="actions">
+        <a class="btn btn--outline" href={links.sisterhood_chat} target="_blank" rel="noopener">Sisterhood chat</a>
+        <a class="btn btn--outline" href={links.brotherhood_chat} target="_blank" rel="noopener">Brotherhood chat</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="year band lattice" aria-labelledby="year-title">
+    <div class="wrap year-inner">
+      <div class="section-head">
+        <h2 id="year-title" class="section-title">Through the year</h2>
+        <span class="year-note only-desktop">Dates follow the Islamic calendar and the semester</span>
+      </div>
+      <div class="year-grid">
+        <div>
+          <span class="eyebrow eyebrow--sm">Speaker events</span>
+          <h3>Lectures and Q&amp;A</h3>
+          <p>Invited scholars and speakers on campus, usually with dinner. Announced a few weeks ahead.</p>
+        </div>
+        <div>
+          <span class="eyebrow eyebrow--sm">Commemorations</span>
+          <h3>Eid al-Ghadeer, Fatimiyya, birth anniversaries</h3>
+          <p>Programs and gatherings marking major dates for the Ahlulbayt (AS).</p>
+        </div>
+        <div>
+          <span class="eyebrow eyebrow--sm">Ramadan</span>
+          <h3>Iftars, Quran circles, Laylatul Qadr</h3>
+          <p>Our busiest month: community iftars, nightly programs, and the Nights of Power on campus.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="closing wrap">
+    <section aria-labelledby="listen-title">
+      <span class="eyebrow eyebrow--sm">Listen</span>
+      <h2 id="listen-title" class="sub-title">ISA playlist</h2>
+      <p>Recitations and lectures collected by members.</p>
+      <a class="caps-link" href={links.playlist} target="_blank" rel="noopener">Open on YouTube</a>
+    </section>
+    <section class="new-here" aria-labelledby="new-title">
+      <span class="eyebrow eyebrow--sm">New here?</span>
+      <h2 id="new-title">Start with a Thursday.</h2>
+      <p>Join the members chat, come to the next Dua Kumayl &amp; Discussion, and say salaam to someone on the e-board.</p>
+      <a class="btn btn--navy" href={links.members_chat} target="_blank" rel="noopener">Join the members chat</a>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .intro {
+    padding-top: 72px;
+    padding-bottom: 56px;
+  }
+
+  .intro .page-title {
+    max-width: 760px;
+  }
+
+  .intro .lead {
+    max-width: 640px;
+  }
+
+  .feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .feature--flip .feature-photo {
+    order: 2;
+  }
+
+  .feature-photo {
+    height: 400px;
+  }
+
+  .feature-text h2 {
+    margin: 8px 0 16px;
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 500;
+    line-height: 1.05;
+    color: var(--ink-heading);
+  }
+
+  .feature-text p {
+    max-width: 560px;
+    margin-bottom: 22px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-body);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .actions .btn--outline {
+    padding: 11px 18px;
+  }
+
+  .current-book {
+    font-size: 14px;
+    color: var(--ink-muted);
+  }
+
+  .year-inner {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  .year .section-head {
+    margin-bottom: 32px;
+  }
+
+  .year-note {
+    font-size: 14px;
+    color: var(--on-navy-muted);
+  }
+
+  .year-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+
+  .year h3 {
+    margin: 8px 0 10px;
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  .year p {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--on-navy-body);
+  }
+
+  .closing {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    padding-top: 64px;
+    padding-bottom: 80px;
+  }
+
+  .closing .sub-title {
+    margin: 8px 0 10px;
+  }
+
+  .closing p {
+    margin-bottom: 16px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-body);
+  }
+
+  .new-here {
+    padding: 28px 30px;
+    background: var(--panel);
+  }
+
+  .new-here h2 {
+    margin: 8px 0 10px;
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--ink-heading);
+  }
+
+  .new-here p {
+    margin-bottom: 18px;
+    line-height: 1.55;
+  }
+
+  .new-here .btn {
+    padding: 12px 22px;
+  }
+
+  @media (max-width: 899.98px) {
+    .intro {
+      padding-top: 32px;
+      padding-bottom: 24px;
+    }
+
+    .feature {
+      display: block;
+      padding-top: 28px;
+      padding-bottom: 28px;
+    }
+
+    .feature-photo {
+      height: 220px;
+      margin-bottom: 18px;
+    }
+
+    .feature-text h2 {
+      margin: 6px 0 8px;
+      font-size: 32px;
+    }
+
+    .feature-text p {
+      margin-bottom: 12px;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .actions {
+      gap: 8px;
+    }
+
+    .actions .btn--outline {
+      padding: 10px 14px;
+    }
+
+    .year-inner {
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+
+    .year .section-head {
+      margin-bottom: 6px;
+    }
+
+    .year .section-title {
+      font-size: 32px;
+    }
+
+    .year-grid {
+      display: block;
+    }
+
+    .year-grid > div {
+      padding: 14px 0;
+    }
+
+    .year h3 {
+      margin: 3px 0 6px;
+      font-size: 22px;
+    }
+
+    .year p {
+      font-size: 14px;
+    }
+
+    .closing {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 28px;
+      padding: 20px 12px 32px;
+    }
+
+    .closing > section:first-child {
+      padding-inline: 8px;
+    }
+
+    .new-here {
+      padding: 18px;
+    }
+
+    .new-here h2 {
+      margin: 4px 0 6px;
+      font-size: 24px;
+    }
+
+    .closing p {
+      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+</style>
