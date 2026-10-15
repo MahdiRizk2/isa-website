@@ -1,0 +1,142 @@
+---
+// One row in the Events page "Coming up" list.
+import { formatDay, formatTime, formatWeekday, type CalendarEvent } from '../lib/calendar';
+import { url } from '../lib/site';
+
+interface Props {
+  event: CalendarEvent;
+}
+
+const { event } = Astro.props;
+const time = formatTime(event);
+const ics = url(`/events/${event.id}.ics`);
+---
+
+<li class="event">
+  <time class="date" datetime={event.start.toISOString()}>
+    <span class="weekday">{formatWeekday(event.start)}</span>
+    <span class="day">{formatDay(event.start)}</span>
+  </time>
+  <div class="info">
+    <span class="name">{event.title}</span>
+    {event.note && <span class="meta only-desktop">{event.note}</span>}
+    <span class="meta only-mobile">{[time, event.place].filter(Boolean).join(' · ')}</span>
+  </div>
+  <div class="when only-desktop">
+    {time}
+    {event.place && <><br />{event.place}</>}
+  </div>
+  <a class="add" href={ics} download aria-label={`Add to calendar: ${event.title}`}>
+    <span class="add-text only-desktop">Add to calendar</span>
+    <span class="add-plus only-mobile" aria-hidden="true">+</span>
+  </a>
+</li>
+
+<style>
+  .event {
+    display: grid;
+    grid-template-columns: 90px 1fr 240px 150px;
+    gap: 24px;
+    align-items: center;
+    padding: 18px 0;
+  }
+
+  .date {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .weekday {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--maize-dark);
+  }
+
+  .day {
+    font-family: var(--serif);
+    font-size: 38px;
+    line-height: 1;
+    color: var(--ink-heading);
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .name {
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--ink-heading);
+  }
+
+  .meta {
+    font-size: 14px;
+    color: var(--ink-muted);
+  }
+
+  .when {
+    font-size: 14px;
+    color: var(--ink-body);
+  }
+
+  .add {
+    justify-self: start;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--navy);
+    border-bottom: 2px solid var(--maize);
+    padding-bottom: 2px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 899.98px) {
+    .event {
+      display: flex;
+      gap: 12px;
+      padding: 14px 0;
+    }
+
+    .date {
+      min-width: 48px;
+    }
+
+    .weekday {
+      font-size: 10px;
+    }
+
+    .day {
+      font-size: 30px;
+    }
+
+    .info {
+      flex: 1;
+    }
+
+    .name {
+      font-size: 15px;
+    }
+
+    .meta {
+      font-size: 12px;
+    }
+
+    .add {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      margin-right: -12px;
+      border: 0;
+      padding: 0;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--maize-dark);
+    }
+  }
+</style>

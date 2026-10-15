@@ -1,0 +1,295 @@
+---
+// The "This week" list. Three looks from the design:
+//   hero   – cream panel inside the Home hero (desktop)
+//   compact – panel under the Home hero (mobile)
+//   page   – plain list on the Events page
+import content from '../data/content.json';
+import { formatDay, formatMonthDay, formatTime, formatWeekday, type CalendarData } from '../lib/calendar';
+import { links, url } from '../lib/site';
+
+interface Props {
+  calendar: CalendarData;
+  variant: 'hero' | 'compact' | 'page';
+}
+
+const { calendar, variant } = Astro.props;
+const { thisWeek, thisWeekIsLater, weekStart } = calendar;
+const heading = thisWeekIsLater ? 'Next up' : 'This week';
+const resume = content.details.programs_resume_month;
+const HeadingTag = 'h2';
+const headingId = `this-week-${variant}`;
+
+const meta = (e: (typeof thisWeek)[number]) =>
+  [formatTime(e), e.place, variant === 'page' ? e.note : null].filter(Boolean).join(' · ');
+---
+
+<section class:list={['this-week', variant, { 'panel-box': variant !== 'page' }]} aria-labelledby={headingId}>
+  <div class="head">
+    <HeadingTag id={headingId} class="title">{heading}</HeadingTag>
+    {variant === 'page' && !thisWeekIsLater && thisWeek.length > 0 && <span class="week-of">Week of {formatMonthDay(weekStart)}</span>}
+    {variant !== 'page' && <a class="see-all" href={url('/events')}>All events</a>}
+  </div>
+
+  {
+    thisWeek.length > 0 ? (
+      <ol class="rows">
+        {thisWeek.map((e) => (
+          <li class="row">
+            <time class="date" datetime={e.start.toISOString()}>
+              <span class="weekday">{formatWeekday(e.start)}</span>
+              <span class="day">{formatDay(e.start)}</span>
+            </time>
+            <div class="info">
+              <span class="name">{e.title}</span>
+              <span class="meta">{meta(e)}</span>
+            </div>
+            {variant === 'hero' && <span class="cadence">{e.cadence ?? ''}</span>}
+          </li>
+        ))}
+      </ol>
+    ) : (
+      <p class="empty">
+        No events scheduled yet.{resume && ` Weekly programs resume in ${resume}.`} Follow the{' '}
+        <a href={links.updates_chat} target="_blank" rel="noopener">
+          Updates chat
+        </a>
+        .
+      </p>
+    )
+  }
+
+  {variant === 'hero' && <p class="note">From the ISA calendar. Rooms are confirmed in the Updates chat.</p>}
+</section>
+
+<style>
+  .this-week {
+    color: var(--ink);
+  }
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .title {
+    font-family: var(--serif);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--ink-heading);
+    white-space: nowrap;
+  }
+
+  .rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .date {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .weekday {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--maize-dark);
+  }
+
+  .day {
+    font-family: var(--serif);
+    line-height: 1;
+    color: var(--ink-heading);
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .name {
+    font-weight: 600;
+    color: var(--ink-heading);
+  }
+
+  .meta {
+    font-size: 14px;
+    color: var(--ink-muted);
+  }
+
+  .empty {
+    padding: 14px 0 6px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-body);
+  }
+
+  .empty a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* hero: cream panel inside the Home hero */
+  .hero {
+    padding: 28px 30px 24px;
+    background: var(--cream);
+    border-top: 4px solid var(--maize);
+  }
+
+  .hero .head {
+    padding-bottom: 8px;
+    margin-bottom: 6px;
+  }
+
+  .hero .title {
+    font-size: 30px;
+  }
+
+  .hero .row {
+    grid-template-columns: 72px 1fr auto;
+    padding: 12px 0;
+  }
+
+  .hero .day {
+    font-size: 34px;
+  }
+
+  .hero .name {
+    font-size: 17px;
+  }
+
+  .cadence {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .note {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+
+  /* compact: panel under the Home hero on phones */
+  .compact {
+    position: relative;
+    margin: -20px 12px 0;
+    padding: 18px 18px 14px;
+    background: var(--panel);
+    border-top: 4px solid var(--maize);
+  }
+
+  .compact .head {
+    padding-bottom: 10px;
+  }
+
+  .compact .title {
+    font-size: 26px;
+  }
+
+  .compact .see-all {
+    font-size: 11px;
+  }
+
+  .compact .row {
+    grid-template-columns: 56px 1fr;
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  .compact .weekday {
+    font-size: 10px;
+  }
+
+  .compact .day {
+    font-size: 28px;
+  }
+
+  .compact .name {
+    font-size: 15px;
+  }
+
+  .compact .meta {
+    font-size: 12px;
+  }
+
+  /* page: plain list on the Events page */
+  .page .head {
+    padding-bottom: 10px;
+  }
+
+  .page .title {
+    font-size: 36px;
+  }
+
+  .week-of {
+    font-size: 13px;
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+
+  .page .row {
+    padding: 18px 0;
+  }
+
+  .page .day {
+    font-size: 38px;
+  }
+
+  .page .name {
+    font-size: 18px;
+  }
+
+  .page .meta {
+    margin-top: 2px;
+  }
+
+  @media (max-width: 899.98px) {
+    .page .head {
+      padding-bottom: 8px;
+    }
+
+    .page .title {
+      font-size: 28px;
+    }
+
+    .week-of {
+      font-size: 12px;
+    }
+
+    .page .row {
+      grid-template-columns: 56px 1fr;
+      gap: 12px;
+      padding: 14px 0;
+    }
+
+    .page .weekday {
+      font-size: 10px;
+    }
+
+    .page .day {
+      font-size: 30px;
+    }
+
+    .page .name {
+      font-size: 15px;
+    }
+
+    .page .meta {
+      font-size: 12px;
+    }
+  }
+</style>
