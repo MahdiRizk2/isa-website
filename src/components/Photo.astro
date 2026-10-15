@@ -1,0 +1,32 @@
+---
+// Responsive photo (AVIF/WebP with JPEG fallback). Put it inside an element
+// with class="media" and a height; the photo covers that box.
+import { Picture } from 'astro:assets';
+import type { Photo } from '../data/photos';
+
+interface Props {
+  photo: Photo;
+  /** How wide the photo renders, e.g. "(min-width: 900px) 560px, 100vw". */
+  sizes: string;
+  /** CSS object-position, e.g. "center 35%". */
+  position?: string;
+  /** Load immediately (use only for the first photo on a page). */
+  priority?: boolean;
+}
+
+const { photo, sizes, position, priority = false } = Astro.props;
+const widths = [480, 800, 1200, 1600, 2400].filter((w) => w <= photo.src.width);
+---
+
+<Picture
+  src={photo.src}
+  alt={photo.alt}
+  widths={widths}
+  sizes={sizes}
+  formats={['avif', 'webp']}
+  fallbackFormat="jpg"
+  loading={priority ? 'eager' : 'lazy'}
+  fetchpriority={priority ? 'high' : 'auto'}
+  decoding="async"
+  style={position ? `object-position: ${position}` : undefined}
+/>

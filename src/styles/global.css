@@ -1,0 +1,411 @@
+/*
+  ISA site styles: design tokens and shared utilities.
+  Page- and component-specific styles live next to their markup in <style> blocks.
+
+  Design rules (design_handoff/README.md › Design character):
+  - No 1px hairlines, dividers or card outlines. Use spacing or solid blocks instead.
+  - Radius 2px on buttons only; 0 everywhere else. No shadows (except the mobile Join bar).
+  - Star lattice only on navy feature bands, never on the header or hero.
+*/
+
+:root {
+  /* Surfaces */
+  --cream: #f6f2e8;
+  --panel: #ebe6d8;
+  --navy: #002848;
+  --maize: #f8c800;
+
+  /* Text on cream */
+  --ink: #1f2d3d;
+  --ink-heading: #002848;
+  --ink-body: #3d4b5a;
+  --ink-muted: #566676; /* darkened from #5B6B7B for AA contrast on panels (D-022) */
+  --maize-dark: #7d6300; /* darkened from #8A6D00 for AA contrast (D-020) */
+
+  /* Text on navy */
+  --on-navy-body: #dbe3ec;
+  --on-navy-muted: #c9d3e0;
+  --on-hero-body: #e2e8ef;
+
+  /* Type */
+  --serif: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --sans: 'Source Sans 3', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+
+  /* Layout */
+  --content-max: 1200px;
+  --gutter: 40px;
+
+  /* 8-point star lattice (two overlapping squares), tiled on navy bands */
+  --lattice: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23F8C800' stroke-opacity='.16'%3E%3Crect x='20' y='20' width='56' height='56'/%3E%3Crect x='20' y='20' width='56' height='56' transform='rotate(45 48 48)'/%3E%3C/g%3E%3C/svg%3E");
+  --lattice-soft: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23F8C800' stroke-opacity='.10'%3E%3Crect x='20' y='20' width='56' height='56'/%3E%3Crect x='20' y='20' width='56' height='56' transform='rotate(45 48 48)'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+@media (max-width: 899.98px) {
+  :root {
+    --gutter: 20px;
+  }
+}
+
+/* ---------- Reset ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+p,
+figure {
+  margin: 0;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--navy);
+  text-decoration: none;
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+a:hover {
+  color: var(--maize-dark);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* Focus: maize ring outside a navy ring, visible on both cream and navy. */
+:focus-visible {
+  outline: 2px solid var(--maize);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--navy);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Layout ---------- */
+
+.wrap {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.band {
+  background-color: var(--navy);
+  color: #fff;
+}
+
+.lattice {
+  background-image: var(--lattice);
+}
+
+.lattice-soft {
+  background-image: var(--lattice-soft);
+}
+
+/* ---------- Type ---------- */
+
+.serif {
+  font-family: var(--serif);
+}
+
+.eyebrow {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--maize-dark);
+}
+
+.eyebrow--sm {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+}
+
+.band .eyebrow,
+.on-navy .eyebrow {
+  color: var(--maize);
+}
+
+.page-title {
+  font-family: var(--serif);
+  font-size: 64px;
+  line-height: 1.02;
+  font-weight: 500;
+  color: var(--ink-heading);
+  margin: 12px 0 16px;
+  text-wrap: balance;
+}
+
+.lead {
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ink-body);
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: 46px;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--ink-heading);
+}
+
+.band .section-title {
+  color: #fff;
+}
+
+.sub-title {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ink-heading);
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+}
+
+.section-head > :first-child {
+  flex-shrink: 0;
+}
+
+@media (max-width: 899.98px) {
+  .eyebrow {
+    font-size: 11px;
+  }
+
+  .page-title {
+    font-size: 40px;
+    margin: 8px 0 10px;
+  }
+
+  .lead {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .section-title {
+    font-size: 34px;
+  }
+
+  .sub-title {
+    font-size: 28px;
+  }
+}
+
+/* ---------- Buttons and links ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 13px 24px;
+  border-radius: 2px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn--navy {
+  background: var(--navy);
+  color: #fff;
+}
+
+.btn--navy:hover {
+  background: #00213b;
+  color: #fff;
+}
+
+.btn--maize {
+  background: var(--maize);
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.btn--maize:hover {
+  background: #e9bc00;
+  color: var(--navy);
+}
+
+.btn--outline {
+  padding: 11px 20px;
+  border: 1.5px solid var(--navy);
+  color: var(--navy);
+  font-size: 15px;
+}
+
+.btn--outline:hover {
+  background: rgba(0, 40, 72, 0.06);
+  color: var(--navy);
+}
+
+/* Small-caps link with a maize underline */
+.caps-link {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy);
+  border-bottom: 2px solid var(--maize);
+  padding-bottom: 3px;
+}
+
+/* "See all" small-caps link in dark maize, no underline */
+.see-all {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--maize-dark);
+  white-space: nowrap;
+}
+
+.see-all:hover {
+  color: var(--navy);
+}
+
+@media (max-width: 899.98px) {
+  .btn {
+    font-size: 15px;
+  }
+
+  .btn--outline {
+    font-size: 14px;
+    padding: 11px 18px;
+  }
+
+  .caps-link,
+  .see-all {
+    font-size: 12px;
+  }
+}
+
+/* ---------- Panels ---------- */
+
+.panel {
+  background: var(--panel);
+  padding: 32px;
+}
+
+.rule-maize {
+  border-top: 4px solid var(--maize);
+}
+
+.rule-navy {
+  border-top: 4px solid var(--navy);
+}
+
+/* ---------- Photos ---------- */
+
+/* Wrap a <Photo> in .media and give the wrapper a height; the image covers it. */
+.media {
+  position: relative;
+  overflow: hidden;
+  background: var(--panel);
+}
+
+.media picture,
+.media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Placeholders (dev only) ---------- */
+
+.placeholder {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+/* ---------- Helpers ---------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -100px;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--maize);
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 12px;
+  color: var(--navy);
+}
+
+@media (min-width: 900px) {
+  .only-mobile {
+    display: none !important;
+  }
+}
+
+@media (max-width: 899.98px) {
+  .only-desktop {
+    display: none !important;
+  }
+}

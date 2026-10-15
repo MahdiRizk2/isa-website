@@ -1,0 +1,52 @@
+---
+// Small three-diamond ornament used between sections.
+---
+
+<div class="diamonds" aria-hidden="true">
+  <span class="dot"></span>
+  <span class="ring"></span>
+  <span class="dot"></span>
+</div>
+
+<style>
+  .diamonds {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .dot,
+  .ring {
+    display: block;
+    transform: rotate(45deg);
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--maize-dark);
+  }
+
+  .ring {
+    width: 10px;
+    height: 10px;
+    border: 1.5px solid var(--maize-dark);
+  }
+
+  @media (max-width: 899.98px) {
+    .diamonds {
+      gap: 12px;
+    }
+
+    .dot {
+      width: 5px;
+      height: 5px;
+    }
+
+    .ring {
+      width: 8px;
+      height: 8px;
+    }
+  }
+</style>

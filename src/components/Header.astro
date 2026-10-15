@@ -1,0 +1,307 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo/ISA_Logo_Yellow-Clear.png';
+import { links, nav, pagePath, url } from '../lib/site';
+
+const current = pagePath(Astro.url.pathname);
+const isActive = (href: string) => current === href;
+---
+
+<header class="site-header">
+  <div class="bar wrap">
+    <a class="brand" href={url('/')}>
+      <Image class="brand-logo" src={logo} alt="" width={48} height={48} densities={[1, 2]} loading="eager" />
+      <span class="brand-text">
+        <span class="brand-name"><span>Islamic Society</span> <span>of Ahlulbayt</span></span>
+        <span class="brand-uni">University of Michigan</span>
+      </span>
+    </a>
+
+    <nav class="nav only-desktop" aria-label="Main">
+      {
+        nav.map((item) => (
+          <a class="nav-link" href={url(item.href)} aria-current={isActive(item.href) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+      <a class="nav-link nav-donate" href={url('/support')} aria-current={isActive('/support') ? 'page' : undefined}>Donate</a>
+      <a class="nav-join" href={url('/join')} aria-current={isActive('/join') ? 'page' : undefined}>Join ISA</a>
+    </nav>
+
+    <button
+      class="menu-button only-mobile"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Open menu"
+      data-menu-button
+    >
+      <span class="menu-glyph" aria-hidden="true" data-menu-glyph>≡</span>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="mobile-menu lattice-soft only-mobile" hidden data-menu>
+    <nav class="menu-links" aria-label="Main">
+      <a href={url('/')} aria-current={isActive('/') ? 'page' : undefined}>Home</a>
+      {
+        nav.map((item) => (
+          <a href={url(item.href)} aria-current={isActive(item.href) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+      <a class="menu-donate" href={url('/support')} aria-current={isActive('/support') ? 'page' : undefined}>Donate</a>
+      <a class="btn btn--maize menu-join" href={url('/join')}>Join ISA</a>
+    </nav>
+    <div class="menu-contact">
+      <a href={links.instagram} target="_blank" rel="noopener">{links.instagram_handle}</a>
+      <a href={`mailto:${links.email}`}>{links.email}</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-menu-button]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const glyph = document.querySelector<HTMLElement>('[data-menu-glyph]');
+  const header = document.querySelector<HTMLElement>('.site-header .bar');
+  const outside = () => document.querySelectorAll<HTMLElement>('main, footer, .sticky-join');
+
+  function setOpen(open: boolean) {
+    if (!button || !menu || !glyph || !header) return;
+    if (open) menu.style.top = `${Math.max(0, header.getBoundingClientRect().bottom)}px`;
+    menu.hidden = !open;
+    button.setAttribute('aria-expanded', String(open));
+    button.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    glyph.textContent = open ? '×' : '≡';
+    document.documentElement.classList.toggle('menu-open', open);
+    outside().forEach((el) => (el.inert = open));
+    if (open) menu.querySelector<HTMLElement>('a')?.focus();
+  }
+
+  button?.addEventListener('click', () => setOpen(Boolean(menu?.hidden)));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu && !menu.hidden) {
+      setOpen(false);
+      button?.focus();
+    }
+  });
+  menu?.addEventListener('click', (event) => {
+    if ((event.target as HTMLElement).closest('a')) setOpen(false);
+  });
+  window.matchMedia('(min-width: 900px)').addEventListener('change', (event) => {
+    if (event.matches) setOpen(false);
+  });
+  // Close if the page is restored from the back/forward cache with the menu open.
+  window.addEventListener('pageshow', () => setOpen(false));
+</script>
+
+<style>
+  .site-header {
+    background: var(--navy);
+    border-top: 4px solid var(--maize);
+    color: #fff;
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 84px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+    color: #fff;
+  }
+
+  .brand:hover {
+    color: #fff;
+  }
+
+  .brand :global(.brand-logo) {
+    width: 48px;
+    height: 48px;
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+  }
+
+  .brand-name {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+
+  .brand-uni {
+    margin-top: 3px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--on-navy-muted);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .nav-link {
+    padding: 6px 0;
+    color: #fff;
+    border-bottom: 2px solid transparent;
+  }
+
+  .nav-link:hover {
+    color: var(--maize);
+  }
+
+  .nav-link[aria-current='page'] {
+    border-bottom-color: var(--maize);
+  }
+
+  .nav-donate {
+    color: var(--maize);
+  }
+
+  .nav-join {
+    padding: 11px 20px;
+    border-radius: 2px;
+    background: var(--maize);
+    color: var(--navy);
+    font-weight: 700;
+  }
+
+  .nav-join:hover {
+    background: #e9bc00;
+    color: var(--navy);
+  }
+
+  .menu-button {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -6px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 20px 24px;
+    overflow-y: auto;
+    background-color: var(--navy);
+    color: #fff;
+  }
+
+  .mobile-menu[hidden] {
+    display: none;
+  }
+
+  .menu-links {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-links a:not(.menu-join) {
+    padding: 12px 0;
+    font-family: var(--serif);
+    font-size: 34px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #fff;
+  }
+
+  .menu-links a[aria-current='page']:not(.menu-join) {
+    text-decoration: underline;
+    text-decoration-color: var(--maize);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 8px;
+  }
+
+  .menu-links .menu-donate {
+    color: var(--maize);
+  }
+
+  .menu-join {
+    margin-top: 20px;
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+  }
+
+  .menu-contact {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    padding-top: 24px;
+  }
+
+  .menu-contact a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 13px;
+    color: var(--on-navy-muted);
+  }
+
+  @media (max-width: 899.98px) {
+    .site-header {
+      border-top-width: 3px;
+    }
+
+    .bar {
+      height: auto;
+      padding: 12px 16px;
+    }
+
+    .brand {
+      gap: 10px;
+    }
+
+    .brand :global(.brand-logo) {
+      width: 36px;
+      height: 36px;
+    }
+
+    .brand-name {
+      font-size: 17px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-uni {
+      display: none;
+    }
+  }
+
+  :global(html.menu-open) {
+    overflow: hidden;
+  }
+</style>

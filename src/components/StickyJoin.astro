@@ -1,0 +1,29 @@
+---
+// Mobile-only "Join ISA" bar that stays at the bottom of the screen.
+import { links } from '../lib/site';
+---
+
+<aside class="sticky-join only-mobile" aria-label="Join ISA">
+  <a class="btn btn--navy" href={links.members_chat} target="_blank" rel="noopener">Join ISA · members chat</a>
+</aside>
+
+<style>
+  .sticky-join {
+    position: sticky;
+    bottom: 0;
+    z-index: 40;
+    padding: 10px 12px 18px;
+    background: linear-gradient(180deg, rgba(246, 242, 232, 0), var(--cream) 45%);
+    /* Taps on the faded area reach the page underneath; only the button catches them. */
+    pointer-events: none;
+  }
+
+  .btn {
+    pointer-events: auto;
+    display: flex;
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    box-shadow: 0 2px 10px rgba(0, 40, 72, 0.25);
+  }
+</style>

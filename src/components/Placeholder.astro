@@ -1,0 +1,12 @@
+---
+// A reminder for a detail that is not filled in yet (e.g. "[Current book]").
+// Shows only while developing locally; renders nothing on the live site.
+import { isDev } from '../lib/site';
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+{isDev && <span class:list={['placeholder', className]}><slot /></span>}

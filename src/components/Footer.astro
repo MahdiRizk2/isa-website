@@ -1,0 +1,179 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo/ISA_Logo_Yellow-Clear.png';
+import content from '../data/content.json';
+import { links, url } from '../lib/site';
+
+interface Props {
+  /** The star lattice is off on Home, where the last section is already a lattice band. */
+  lattice?: boolean;
+}
+const { lattice = true } = Astro.props;
+const { credit } = content;
+---
+
+<footer class:list={['site-footer', { 'lattice-soft': lattice }]}>
+  <div class="wrap columns only-desktop">
+    <div class="brand-col">
+      <div class="brand">
+        <Image class="footer-logo" src={logo} alt="" width={44} height={44} densities={[1, 2]} />
+        <span class="name">Islamic Society of Ahlulbayt</span>
+      </div>
+      <p>University of Michigan, Ann Arbor<br />A member of the Muslim Coalition</p>
+    </div>
+    <nav class="col" aria-label="Pages">
+      <span class="col-title">Pages</span>
+      <a href={url('/events')}>Events</a>
+      <a href={url('/programs')}>Programs</a>
+      <a href={url('/photos')}>Photos</a>
+      <a href={url('/about')}>About</a>
+    </nav>
+    <div class="col">
+      <span class="col-title">Connect</span>
+      <a href={links.members_chat} target="_blank" rel="noopener">Members chat</a>
+      <a href={links.updates_chat} target="_blank" rel="noopener">Updates chat</a>
+      <a href={links.instagram} target="_blank" rel="noopener">{links.instagram_handle}</a>
+      <a href={`mailto:${links.email}`}>{links.email}</a>
+    </div>
+    <div class="col">
+      <span class="col-title">Resources</span>
+      <a href={links.discussion_resources} target="_blank" rel="noopener">Discussion resources</a>
+      <a href={links.playlist} target="_blank" rel="noopener">Playlist</a>
+      <a href={links.pin_up_board} target="_blank" rel="noopener">Pin-up board</a>
+      <a href={url('/support')}>Support ISA</a>
+      <a href={url('/join')}>Join</a>
+    </div>
+  </div>
+
+  <div class="wrap compact only-mobile">
+    <span class="name">Islamic Society of Ahlulbayt</span>
+    <span>University of Michigan, Ann Arbor · A member of the Muslim Coalition</span>
+    <a class="compact-link" href={`mailto:${links.email}`}>{links.email}</a>
+    <a class="compact-link" href={links.instagram} target="_blank" rel="noopener">{links.instagram_handle}</a>
+  </div>
+
+  <div class="wrap credit">
+    Site by <a href={credit.url} target="_blank" rel="noopener">{credit.name}</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--navy);
+    border-top: 4px solid var(--maize);
+    color: var(--on-navy-muted);
+    font-size: 14px;
+  }
+
+  .site-footer a {
+    color: var(--on-navy-muted);
+  }
+
+  .site-footer a:hover {
+    color: var(--maize);
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 32px;
+    padding-top: 48px;
+    padding-bottom: 32px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .brand :global(.footer-logo) {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  .name {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.1;
+    color: #fff;
+  }
+
+  .brand-col p {
+    line-height: 1.6;
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .col-title {
+    margin-bottom: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--maize);
+  }
+
+  .credit {
+    padding-top: 0;
+    padding-bottom: 28px;
+    font-size: 13px;
+  }
+
+  .credit a {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  @media (max-width: 899.98px) {
+    .site-footer {
+      border-top-width: 3px;
+      font-size: 12px;
+    }
+
+    .compact {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      padding-top: 22px;
+      padding-bottom: 8px;
+    }
+
+    .compact .name {
+      font-size: 18px;
+    }
+
+    .compact-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      margin-bottom: -12px;
+    }
+
+    .compact-link:first-of-type {
+      margin-top: 2px;
+    }
+
+    .credit {
+      padding-top: 20px;
+      padding-bottom: 24px;
+      font-size: 12px;
+    }
+
+    .credit a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      margin-block: -14px;
+    }
+  }
+</style>

@@ -34,3 +34,6 @@ design_handoff/screenshots/
 design_handoff/assets/
 design_handoff/design/*.dc.html
 design_handoff/design/support.js
+
+# Astro
+.astro/

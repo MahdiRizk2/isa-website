@@ -1,0 +1,69 @@
+---
+// Fonts. Each file declares every language subset with a unicode-range, so browsers
+// only download the subsets a page actually uses (Latin for this site).
+import '@fontsource/cormorant-garamond/400.css';
+import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/cormorant-garamond/600.css';
+import '@fontsource/source-sans-3/400.css';
+import '@fontsource/source-sans-3/600.css';
+import '@fontsource/source-sans-3/700.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '../styles/global.css';
+import serifLatin from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2?url';
+import sansLatin from '@fontsource/source-sans-3/files/source-sans-3-latin-400-normal.woff2?url';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyJoin from '../components/StickyJoin.astro';
+import { url } from '../lib/site';
+
+interface Props {
+  /** Page name shown in the browser tab, e.g. "Events". Leave out on Home. */
+  title?: string;
+  description: string;
+  footerLattice?: boolean;
+}
+
+const { title, description, footerLattice = true } = Astro.props;
+const siteName = 'Islamic Society of Ahlulbayt';
+const fullTitle = title ? `${title} · ${siteName}` : `${siteName} · University of Michigan`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(url('/og.png'), Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#002848" />
+
+    <link rel="preload" href={serifLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={sansLatin} as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" href={url('/favicon.ico')} sizes="48x48" />
+    <link rel="icon" href={url('/favicon-32.png')} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lattice={footerLattice} />
+    <StickyJoin />
+  </body>
+</html>
