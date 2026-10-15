@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/site';
+---
+
+<Base title="Page not found" description="This page does not exist on the Islamic Society of Ahlulbayt website.">
+  <section class="wrap not-found" aria-labelledby="nf-title">
+    <span class="eyebrow">404</span>
+    <h1 id="nf-title" class="page-title">This page does not exist.</h1>
+    <p class="lead">It may have moved. Start from the home page or see what's on this week.</p>
+    <div class="actions">
+      <a class="btn btn--navy" href={url('/')}>Home</a>
+      <a class="btn btn--outline" href={url('/events')}>Events</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .not-found {
+    padding-top: 96px;
+    padding-bottom: 120px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  @media (max-width: 899.98px) {
+    .not-found {
+      padding-top: 48px;
+      padding-bottom: 64px;
+    }
+  }
+</style>
