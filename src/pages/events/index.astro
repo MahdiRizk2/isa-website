@@ -1,0 +1,323 @@
+---
+import Base from '../../layouts/Base.astro';
+import ThisWeek from '../../components/ThisWeek.astro';
+import EventRow from '../../components/EventRow.astro';
+import Placeholder from '../../components/Placeholder.astro';
+import content from '../../data/content.json';
+import { getCalendar } from '../../lib/calendar';
+import { links } from '../../lib/site';
+
+const calendar = await getCalendar();
+const massMeetingDate = content.details.mass_meeting_date;
+---
+
+<Base
+  title="Events"
+  description="What's on at ISA: weekly programs through the fall and winter semesters, plus speaker events, commemorations, and socials from the ISA calendar."
+>
+  <section class="intro wrap" aria-labelledby="events-title">
+    <div>
+      <span class="eyebrow">Events</span>
+      <h1 id="events-title" class="page-title">What's on at ISA</h1>
+      <p class="lead">Weekly programs run through the fall and winter semesters. One-off events are announced here and in the Updates chat.</p>
+    </div>
+    <div class="calendar-actions">
+      <a class="btn btn--navy" href={links.calendar_embed} target="_blank" rel="noopener">Open in Google Calendar</a>
+      <a class="btn btn--outline" href={links.calendar_ical}>Subscribe (iCal)</a>
+    </div>
+  </section>
+
+  <div class="layout wrap">
+    <div class="area-week">
+      <ThisWeek calendar={calendar} variant="page" />
+    </div>
+
+    <aside class="area-rhythm" aria-label="Regular schedule">
+      <section class="rhythm" aria-labelledby="rhythm-title">
+        <span class="eyebrow eyebrow--sm only-mobile">Every week</span>
+        <h2 id="rhythm-title" class="sub-title">The weekly rhythm</h2>
+        <dl>
+          <div><dt>Every other Tuesday</dt><dd>Book Club &amp; Dua Tawassul</dd></div>
+          <div><dt>Every Thursday</dt><dd>Dua Kumayl &amp; Discussion</dd></div>
+          <div><dt>Once a month</dt><dd>Sisterhood and Brotherhood events</dd></div>
+        </dl>
+        <p class="rhythm-note">Times and rooms are set each semester and posted in the Updates chat.</p>
+      </section>
+
+      <section class="mass-meeting" aria-labelledby="mm-title">
+        <span class="eyebrow eyebrow--sm">Each fall</span>
+        <h2 id="mm-title">Mass Meeting</h2>
+        <p>The year opens with a mass meeting: meet the executive board, hear what is planned, and join the chats.</p>
+        {massMeetingDate ? <p class="mm-date">{massMeetingDate}</p> : <Placeholder>[Mass meeting date]</Placeholder>}
+      </section>
+    </aside>
+
+    {
+      calendar.comingUp.length > 0 && (
+        <section class="area-coming coming" aria-labelledby="coming-title">
+          <div class="section-head">
+            <h2 id="coming-title" class="sub-title">Coming up</h2>
+            <span class="coming-note only-desktop">From the ISA calendar. Rooms are confirmed in the Updates chat.</span>
+          </div>
+          {calendar.comingUp.map((group) => (
+            <section class="month" aria-label={group.label}>
+              <h3 class="eyebrow eyebrow--sm month-title">{group.label}</h3>
+              <ol class="event-list">
+                {group.events.map((event) => (
+                  <EventRow event={event} />
+                ))}
+              </ol>
+            </section>
+          ))}
+        </section>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .intro {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 48px;
+    align-items: end;
+    padding-top: 72px;
+    padding-bottom: 40px;
+  }
+
+  .intro .lead {
+    max-width: 600px;
+  }
+
+  .calendar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .calendar-actions .btn--outline {
+    font-size: 16px;
+    padding: 12px 20px;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'week rhythm'
+      'coming coming';
+    column-gap: 64px;
+    padding-top: 48px;
+    padding-bottom: 80px;
+  }
+
+  .area-week {
+    grid-area: week;
+  }
+
+  .area-rhythm {
+    grid-area: rhythm;
+  }
+
+  .area-coming {
+    grid-area: coming;
+  }
+
+  .rhythm .sub-title {
+    padding-bottom: 10px;
+  }
+
+  dl {
+    margin: 0;
+  }
+
+  dl div {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 12px;
+    padding: 16px 0;
+    font-size: 16px;
+  }
+
+  dt {
+    font-weight: 600;
+    color: var(--ink-heading);
+  }
+
+  dd {
+    margin: 0;
+    color: var(--ink-body);
+  }
+
+  .rhythm-note {
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+  }
+
+  .mass-meeting {
+    margin-top: 32px;
+    padding: 22px 24px;
+    background: var(--panel);
+  }
+
+  .mass-meeting h2 {
+    margin: 6px 0 8px;
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--ink-heading);
+  }
+
+  .mass-meeting p {
+    margin-bottom: 8px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-body);
+  }
+
+  .mass-meeting .mm-date {
+    font-weight: 600;
+    color: var(--ink-heading);
+  }
+
+  .coming {
+    padding-top: 72px;
+  }
+
+  .coming .section-head {
+    padding-bottom: 10px;
+    margin-bottom: 8px;
+  }
+
+  .coming-note {
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+
+  .month-title {
+    padding: 18px 0 8px;
+  }
+
+  .month + .month .month-title {
+    padding-top: 30px;
+  }
+
+  .event-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (max-width: 899.98px) {
+    .intro {
+      display: block;
+      padding-top: 32px;
+      padding-bottom: 20px;
+    }
+
+    .intro .lead {
+      margin-bottom: 16px;
+    }
+
+    .calendar-actions {
+      gap: 8px;
+    }
+
+    .calendar-actions .btn,
+    .calendar-actions .btn--outline {
+      width: 100%;
+      font-size: 15px;
+      padding: 13px;
+    }
+
+    .layout {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'week'
+        'coming'
+        'rhythm';
+      padding: 24px 0 32px;
+    }
+
+    .area-week,
+    .area-coming {
+      padding-inline: 20px;
+    }
+
+    .coming {
+      padding-top: 32px;
+    }
+
+    .coming .section-head {
+      padding-bottom: 8px;
+      margin-bottom: 0;
+    }
+
+    .month-title {
+      padding: 14px 0 6px;
+    }
+
+    .month + .month .month-title {
+      padding-top: 22px;
+    }
+
+    .area-rhythm {
+      padding: 28px 12px 0;
+    }
+
+    .rhythm {
+      padding: 18px;
+      background: var(--panel);
+      border-top: 4px solid var(--maize);
+    }
+
+    .rhythm .sub-title {
+      margin: 4px 0 8px;
+      padding: 0;
+      font-size: 24px;
+    }
+
+    dl {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    dl div {
+      display: block;
+      padding: 0;
+      font-size: 14px;
+    }
+
+    dt,
+    dd {
+      display: inline;
+    }
+
+    dd::before {
+      content: ' · ';
+    }
+
+    .rhythm-note {
+      margin-top: 10px;
+      font-size: 12px;
+    }
+
+    .mass-meeting {
+      margin-top: 12px;
+      padding: 18px;
+    }
+
+    .mass-meeting h2 {
+      margin: 4px 0 6px;
+      font-size: 24px;
+    }
+
+    .mass-meeting p {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+</style>
