@@ -54,19 +54,80 @@ Open questions that still need an answer live at the end of this file.
 - **Why:** The calendar is restricted to umich.edu accounts, so an embed shows nothing to visitors. Reading the feed at build time keeps the site static and free to host while staying up to date.
 - **Consequences:** The feed must be readable at build time. As of 2026-10-14 the public feed URL returns 404 (calendar is not public). See open question Q-1.
 
+## D-007 · ISA Google Calendar made public
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** The ISA Google Calendar is now public, so its iCal feed can be read at build time without credentials. Resolves Q-1.
+- **Alternatives:** Keep it umich-only and read the private ("secret") iCal address as a build secret; launch on a hand-maintained fallback file.
+- **Why:** Simplest setup with nothing secret to hand over.
+- **Consequences:** Everything on the calendar (titles, locations, descriptions) is visible to anyone. Do not put private details in calendar events. Event titles are currently inconsistent ("Dua and Discussion", "ISA Dua and Discussion"; "Book Club", "Tea and Tawassul"), so the site matches programs by keywords; see the naming guide in the README once written.
+
+## D-008 · Donations go through a personal Venmo for now
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** Until ISA has its own payment account, the Donate buttons link to Mahdi Rizk's personal Venmo, and Mahdi passes the money to ISA. Larger or recurring gifts are directed to email the e-board. Resolves Q-2.
+- **Alternatives:** No online giving until an org account exists; Zelle (needs an org bank account).
+- **Why:** No org payment account is expected before launch.
+- **Consequences:** The link in `content.json › links.donate` must be replaced when Mahdi steps back. Money received this way should be logged and transferred to the ISA account promptly.
+
+## D-009 · Full mission statement on mobile too
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** The mobile home page shows the full mission sentence, same as desktop, instead of the shortened version in the prototype. Resolves Q-3.
+- **Why:** The mission statement is the org's own wording and is never edited.
+
+## D-010 · Event times and locations are shown on the site
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** When a calendar event has a time and location, the site shows them. Resolves Q-4. Supersedes the spec line "Times and rooms are NOT published on the site".
+- **Consequences:** The weekly-rhythm text stays general ("posted in the Updates chat each semester"); individual events show their own details.
+
+## D-011 · Additional community links
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** Added the sisterhood chat, mailing-list sign-up form and ISA pin-up board (Padlet). The "discussion chat" is the same WhatsApp group as the members chat. Resolves most of Q-5.
+- **Consequences:** The pin-up board lives under a member's personal Padlet account; ownership should move to an ISA account eventually.
+
+## D-012 · Host on GitHub Pages for now; custom domain planned
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** The first public version deploys to GitHub Pages (built by a GitHub Action). A custom domain matching the Instagram handle (`isahlulbayt.com` and/or `.org`) will be bought by Mahdi and handed to the org later. Partly supersedes D-004 (Cloudflare Pages). Resolves Q-6.
+- **Alternatives:** Cloudflare Pages from day one.
+- **Why:** No extra account needed to get the site live.
+- **Consequences:** Until the domain is set up, the site is served from a sub-path (`/isa-website/`), handled by Astro's `base` setting. GitHub Pages cannot set custom HTTP headers, so the planned `_headers` file has no effect there. Domain renewal must be tied to someone's payment card; record the expiry date and registrar in this repo.
+
+## D-013 · Mahdi owns the accounts for now; ISA GitHub organization later
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** The repo, hosting and domain stay under Mahdi's personal accounts for now. Creating an ISA-owned GitHub organization (and shared accounts) is deferred. Defers Q-7.
+- **Consequences:** Before Mahdi steps back: create the ISA GitHub organization, transfer the repo (GitHub keeps redirects), move the domain to an ISA-controlled registrar account, and update the donate link.
+
+## D-014 · Board list and consent
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** All 2026-27 board members and the people in the site photos have consented to being published. Mahdi Rizk is added to the board list as Advisor. Resolves Q-8.
+
+## D-015 · Footer credit
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** The footer includes a credit to Mahdi Rizk linking to mrizky.dev.
+
 ---
 
 ## Open questions
 
 | ID | Question | Raised | Status |
 |---|---|---|---|
-| Q-1 | Calendar feed: make the calendar public, use the secret iCal URL as a build-time secret, or launch on the fallback? | 2026-10-14 | Open |
-| Q-2 | Donations: is an org payment link (Zelle or other) coming before launch? If not, what does the Support page point to? | 2026-10-14 | Open |
-| Q-3 | Mobile home shows a shortened mission statement; the spec says the mission is never edited. Use the full text on mobile? | 2026-10-14 | Open |
-| Q-4 | If calendar events include times and rooms, are they shown on the public site? | 2026-10-14 | Open |
-| Q-5 | Links for the mailing list, sisterhood chat, discussion chat and pin-up board. | 2026-10-14 | Open |
-| Q-6 | Domain: `*.pages.dev` or a custom domain? | 2026-10-14 | Open |
-| Q-7 | Ownership: move the repo and hosting to an ISA-owned GitHub organization and shared Cloudflare account for yearly handover? | 2026-10-14 | Open |
-| Q-8 | Consent from board members (names) and people in photos for public publishing. | 2026-10-14 | Open |
+| Q-1 | Calendar feed access | 2026-10-14 | Resolved by D-007 |
+| Q-2 | Online donations | 2026-10-14 | Resolved by D-008 |
+| Q-3 | Mission text on mobile | 2026-10-14 | Resolved by D-009 |
+| Q-4 | Event times and rooms on the site | 2026-10-14 | Resolved by D-010 |
+| Q-5 | Community links | 2026-10-14 | Partly resolved by D-011; brotherhood chat link still missing |
+| Q-6 | Domain | 2026-10-14 | Resolved by D-012 |
+| Q-7 | ISA-owned GitHub organization and accounts | 2026-10-14 | Deferred by D-013 |
+| Q-8 | Consent for names and photos | 2026-10-14 | Resolved by D-014 |
 | Q-9 | Darken the eyebrow color `#8A6D00` to `#7D6300` so it meets WCAG AA contrast (currently 4.40:1 on cream, 3.95:1 on panels)? | 2026-10-14 | Open |
 | Q-10 | Build site photos from the full-resolution originals (JPEG, ~2400px) instead of the 1400px handoff PNGs? | 2026-10-14 | Open |
+| Q-11 | Should the Support page publish check-giving details (payee, mailing address, treasurer contact)? Payee and tax-deductibility need confirming with SOAS first. | 2026-10-15 | Open |
+| Q-12 | Where does the pin-up board link go on the site? | 2026-10-15 | Open |
+| Q-13 | Scheduled rebuilds stop after 60 days without repo activity (GitHub rule for public repos). How to keep them running over summer? | 2026-10-15 | Open |
