@@ -112,6 +112,39 @@ Open questions that still need an answer live at the end of this file.
 - **Decided by:** Mahdi Rizk
 - **Decision:** The footer includes a credit to Mahdi Rizk linking to mrizky.dev.
 
+## D-016 · Brotherhood chat link added
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** Added the ISA Brotherhood WhatsApp chat link. With D-011, all community links are now known. Resolves Q-5.
+
+## D-017 · Pin-up board appears in the footer and on the Join page
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** The pin-up board link goes in the footer's Resources column and as a fourth item in the Join page contact row, next to Instagram, Email and Mailing list. Resolves Q-12.
+
+## D-018 · The Venmo note says it is temporary
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** Next to the Donate button, a short note explains that gifts currently go through Mahdi Rizk's Venmo and are passed to ISA, and that this is a temporary workaround while ISA sets up a permanent way to give once or monthly. Refines D-008.
+- **Consequences:** When a permanent method exists, update `links.donate` and remove the note.
+
+## D-019 · Check and large-gift details are given by email only
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** The site does not publish SOAS account details (payee, shortcode, mailing address, EIN, treasurer). Donors who want to give by check or set up a recurring gift are asked to email the e-board. Resolves Q-11.
+- **Why:** The correct payee and tax-deductibility for gifts to a student org are unconfirmed with SOAS, and the treasurer changes every year.
+
+## D-020 · Accessibility color fix and full-resolution photos
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** The dark maize used for eyebrow labels and small links changes from `#8A6D00` to `#7D6300` (5.14:1 on cream, 4.61:1 on panels; meets WCAG AA). Site photos are exported from the full-resolution originals as JPEG at about 2400px instead of using the 1400px handoff PNGs. Resolves Q-9 and Q-10.
+- **Why:** The original color failed AA contrast for small text. The handoff PNGs were 2–4 MB each and too small for the full-width hero.
+
+## D-021 · Board list order and footer credit wording
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** The Advisor appears last in the board list. The footer credit reads "Site by Mahdi Rizk" and links to mrizky.dev. Refines D-014 and D-015.
+
 ---
 
 ## Open questions
@@ -122,12 +155,12 @@ Open questions that still need an answer live at the end of this file.
 | Q-2 | Online donations | 2026-10-14 | Resolved by D-008 |
 | Q-3 | Mission text on mobile | 2026-10-14 | Resolved by D-009 |
 | Q-4 | Event times and rooms on the site | 2026-10-14 | Resolved by D-010 |
-| Q-5 | Community links | 2026-10-14 | Partly resolved by D-011; brotherhood chat link still missing |
+| Q-5 | Community links | 2026-10-14 | Resolved by D-011 and D-016 |
 | Q-6 | Domain | 2026-10-14 | Resolved by D-012 |
 | Q-7 | ISA-owned GitHub organization and accounts | 2026-10-14 | Deferred by D-013 |
 | Q-8 | Consent for names and photos | 2026-10-14 | Resolved by D-014 |
-| Q-9 | Darken the eyebrow color `#8A6D00` to `#7D6300` so it meets WCAG AA contrast (currently 4.40:1 on cream, 3.95:1 on panels)? | 2026-10-14 | Open |
-| Q-10 | Build site photos from the full-resolution originals (JPEG, ~2400px) instead of the 1400px handoff PNGs? | 2026-10-14 | Open |
-| Q-11 | Should the Support page publish check-giving details (payee, mailing address, treasurer contact)? Payee and tax-deductibility need confirming with SOAS first. | 2026-10-15 | Open |
-| Q-12 | Where does the pin-up board link go on the site? | 2026-10-15 | Open |
+| Q-9 | Eyebrow color contrast | 2026-10-14 | Resolved by D-020 |
+| Q-10 | Photo source files | 2026-10-14 | Resolved by D-020 |
+| Q-11 | Check-giving details on the Support page | 2026-10-15 | Resolved by D-019 |
+| Q-12 | Pin-up board placement | 2026-10-15 | Resolved by D-017 |
 | Q-13 | Scheduled rebuilds stop after 60 days without repo activity (GitHub rule for public repos). How to keep them running over summer? | 2026-10-15 | Open |
