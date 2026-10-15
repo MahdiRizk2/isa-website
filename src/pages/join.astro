@@ -1,0 +1,349 @@
+---
+import Base from '../layouts/Base.astro';
+import { links, mailto } from '../lib/site';
+
+const [emailUser, emailDomain] = links.email.split('@');
+---
+
+<Base
+  title="Join"
+  description="No application. No dues. Just show up. Join the Islamic Society of Ahlulbayt through the members chat or the announcements-only Updates chat."
+>
+  <section class="intro wrap" aria-labelledby="join-title">
+    <span class="eyebrow">Join ISA</span>
+    <h1 id="join-title" class="page-title">No application. No dues. Just show up.</h1>
+    <p class="lead">Everything ISA does is announced in two WhatsApp chats. Pick the one that fits.</p>
+  </section>
+
+  <div class="chats wrap">
+    <a class="chat chat--members band lattice" href={links.members_chat} target="_blank" rel="noopener">
+      <span class="eyebrow eyebrow--sm">Recommended</span>
+      <span class="chat-title">Members chat</span>
+      <span class="chat-body">Conversation, carpools, last-minute plans, and every announcement. This is where the community lives.</span>
+      <span class="chat-cta">Join on WhatsApp →</span>
+    </a>
+    <a class="chat chat--updates" href={links.updates_chat} target="_blank" rel="noopener">
+      <span class="eyebrow eyebrow--sm">Quiet option</span>
+      <span class="chat-title">Updates chat</span>
+      <span class="chat-body">Announcements only, no discussion. Event times, rooms, and changes.</span>
+      <span class="chat-cta">Join on WhatsApp →</span>
+    </a>
+  </div>
+
+  <div class="contacts wrap">
+    <a href={links.instagram} target="_blank" rel="noopener">
+      <span class="eyebrow eyebrow--sm">Instagram</span>
+      <span class="contact-value">{links.instagram_handle}</span>
+    </a>
+    <a href={mailto}>
+      <span class="eyebrow eyebrow--sm">Email</span>
+      <span class="contact-value contact-email">{emailUser}@<wbr />{emailDomain}</span>
+    </a>
+    <a href={links.mailing_list} target="_blank" rel="noopener">
+      <span class="eyebrow eyebrow--sm">Mailing list</span>
+      <span class="contact-value">Sign up</span>
+    </a>
+    <a href={links.pin_up_board} target="_blank" rel="noopener">
+      <span class="eyebrow eyebrow--sm">Pin-up board</span>
+      <span class="contact-value">Open the board</span>
+    </a>
+  </div>
+
+  <section class="expect wrap" aria-labelledby="expect-title">
+    <h2 id="expect-title">What to expect</h2>
+    <div>
+      <h3>Your first Thursday</h3>
+      <p>Come to Dua Kumayl &amp; Discussion. Dua is recited together with slides; the discussion is open and nobody is put on the spot.</p>
+    </div>
+    <div>
+      <h3>Not Shia? Not Muslim?</h3>
+      <p>You are still welcome. ISA exists for Muslims and anyone interested in learning. Questions are encouraged.</p>
+    </div>
+    <div>
+      <h3>Want to help run things?</h3>
+      <p>Executive board positions open each spring. Ask any board member or email us.</p>
+    </div>
+  </section>
+
+  <div class="forms wrap">
+    <a class="form-link" href={links.request_topic_form} target="_blank" rel="noopener">
+      <span>
+        <span class="eyebrow eyebrow--sm only-desktop">Form</span>
+        <span class="form-title">Request a discussion topic</span>
+      </span>
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
+    <a class="form-link" href={links.book_club_form} target="_blank" rel="noopener">
+      <span>
+        <span class="eyebrow eyebrow--sm only-desktop">Form</span>
+        <span class="form-title">Suggest a book for Book Club</span>
+      </span>
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+</Base>
+
+<style>
+  .intro {
+    padding-top: 72px;
+    padding-bottom: 48px;
+  }
+
+  .intro .page-title {
+    max-width: 760px;
+  }
+
+  .intro .lead {
+    max-width: 600px;
+  }
+
+  .chats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .chat {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 36px;
+  }
+
+  .chat--members {
+    border-top: 4px solid var(--maize);
+    color: #fff;
+  }
+
+  .chat--members:hover {
+    color: #fff;
+  }
+
+  .chat--updates {
+    background: var(--panel);
+    border-top: 4px solid var(--navy);
+    color: var(--navy);
+  }
+
+  .chat--updates:hover {
+    color: var(--navy);
+  }
+
+  .chat-title {
+    font-family: var(--serif);
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .chat-body {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-body);
+  }
+
+  .chat--members .chat-body {
+    color: var(--on-navy-body);
+  }
+
+  .chat-cta {
+    margin-top: 8px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .chat--members .chat-cta {
+    color: var(--maize);
+  }
+
+  .chat:hover .chat-cta {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .contacts {
+    display: grid;
+    grid-template-columns: 1fr 1.35fr 1fr 1fr;
+    gap: 32px;
+    padding-top: 48px;
+  }
+
+  .contacts a {
+    color: var(--navy);
+  }
+
+  .contact-value {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .contacts a:hover .contact-value {
+    color: var(--maize-dark);
+  }
+
+  .contact-email {
+    font-size: 24px;
+    overflow-wrap: anywhere;
+  }
+
+  .expect {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr 1fr;
+    gap: 40px;
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .expect h2 {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--ink-heading);
+  }
+
+  .expect h3 {
+    margin-bottom: 6px;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink-heading);
+  }
+
+  .expect p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-body);
+  }
+
+  .forms {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding-bottom: 80px;
+  }
+
+  .form-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 26px;
+    background: var(--panel);
+    color: var(--navy);
+  }
+
+  .form-link:hover {
+    color: var(--navy);
+    background: #e3ddcc;
+  }
+
+  .form-title {
+    display: block;
+    margin-top: 4px;
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 600;
+  }
+
+  .arrow {
+    font-size: 22px;
+  }
+
+  @media (max-width: 1080px) and (min-width: 900px) {
+    .contacts {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 899.98px) {
+    .intro {
+      padding-top: 32px;
+      padding-bottom: 20px;
+    }
+
+    .chats {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding-inline: 12px;
+    }
+
+    .chat {
+      gap: 6px;
+      padding: 22px;
+    }
+
+    .chat-title {
+      font-size: 30px;
+    }
+
+    .chat-body {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .chat-cta {
+      margin-top: 4px;
+      font-size: 14px;
+    }
+
+    .contacts {
+      display: block;
+      padding-top: 24px;
+    }
+
+    .contacts a {
+      display: block;
+      padding: 14px 0;
+    }
+
+    .contact-value {
+      margin-top: 2px;
+      font-size: 24px;
+    }
+
+    .contact-email {
+      font-size: 20px;
+    }
+
+    .expect {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-top: 28px;
+      padding-bottom: 0;
+    }
+
+    .expect h2 {
+      font-size: 30px;
+    }
+
+    .expect h3 {
+      margin-bottom: 3px;
+      font-size: 15px;
+    }
+
+    .expect p {
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .forms {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 24px 12px 32px;
+    }
+
+    .form-link {
+      padding: 16px 18px;
+    }
+
+    .form-title {
+      margin-top: 0;
+      font-size: 21px;
+    }
+  }
+</style>
