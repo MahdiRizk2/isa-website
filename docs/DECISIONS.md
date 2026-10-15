@@ -145,6 +145,52 @@ Open questions that still need an answer live at the end of this file.
 - **Decided by:** Mahdi Rizk
 - **Decision:** The Advisor appears last in the board list. The footer credit reads "Site by Mahdi Rizk" and links to mrizky.dev. Refines D-014 and D-015.
 
+## D-022 · More accessible muted text and focus rings
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk (v1 build)
+- **Decision:** The muted text color changes from `#5B6B7B` to `#566676` (4.73:1 on the darker cream panels, up from 4.39:1). Keyboard focus shows a 2px maize outline around a 2px navy ring, so it is visible on both cream and navy.
+- **Why:** The spec's maize-only focus ring is nearly invisible on cream (1.4:1), and the old muted color failed AA on panels. Same reasoning as D-020.
+
+## D-023 · Calendar notes and links after making the calendar public
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk (v1 build)
+- **Decision:** Removed the line "Google Calendar view requires a umich.edu account" from the Events page, since the calendar is now public (D-007). "Open in Google Calendar" and "Subscribe (iCal)" link straight to the public calendar.
+
+## D-024 · How calendar events are shown
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk (v1 build)
+- **Decision:**
+  - "This week" shows up to three events in the next 7 days in date order, always including the Thursday program (titles containing "Dua and Discussion" or "Kumayl"). If nothing is on in the next 7 days, the panel is titled "Next up" and shows the next three events. If the calendar is empty, it shows "No events scheduled yet… Follow the Updates chat."
+  - "Coming up" shows every other event in the next 90 days, grouped by month.
+  - A leading "ISA " is dropped from event titles. The place shown is the location text before the first comma. The cadence label ("Weekly", "Biweekly") comes from the event's repeat rule.
+  - "Add to calendar" downloads a per-event `.ics` file generated at build time.
+- **Alternatives:** Linking to the Google Calendar event page (the feed does not include those links); showing the calendar title unchanged.
+- **Consequences:** Event quality depends on how events are entered in the calendar; README.md › Events has a short guide for organizers. Note: the calendar currently lists Book Club weekly in November while the site's weekly-rhythm text says "Every other Tuesday"; the board should decide which is right and update one of them.
+
+## D-025 · One set of text for phones and desktops
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk (v1 build)
+- **Decision:** The prototype had shortened versions of several paragraphs for phones. The site uses the full desktop text at every screen size. Mobile layout differences from the prototype are kept (for example Home shows three programs on phones). Small wording added where the prototype only had placeholders: "Sisterhood chat" / "Brotherhood chat" buttons on Programs, "Sign up" and "Open the board" on Join, "Reading now:" before the current book. The Photos intro drops "Captions are placeholders." because empty captions are hidden.
+- **Why:** One version of each sentence is easier to maintain and avoids the two drifting apart.
+
+## D-026 · Small visual adjustments to the prototype
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk (v1 build)
+- **Decision:** Slightly darker photo overlay behind the mobile hero text so the maize eyebrow stays readable. Headings use balanced line wrapping. A simple 404 page was added in the site's style. Missing details show as grey bracketed placeholders only when running locally and are hidden on the live site.
+
+## D-027 · Deploy workflow and scheduled rebuilds
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk
+- **Decision:** One GitHub Actions workflow (`.github/workflows/deploy.yml`) builds and deploys to GitHub Pages on every push to `main`, twice a day on a schedule, and on demand. Scheduled runs pausing after 60 days without commits is handled by documentation (README.md › Events) rather than a workaround. Resolves Q-13.
+- **Alternatives:** A keep-alive job that commits automatically; an external cron service.
+- **Why:** No extra moving parts. Summer has no events, so a paused schedule costs nothing until fall.
+
+## D-028 · Performance setup
+- **Date:** 2026-10-15
+- **Decided by:** Mahdi Rizk (v1 build)
+- **Decision:** CSS is inlined into each page (it is small). Fonts are self-hosted with per-language subsets so only Latin files download, and the two main faces are preloaded. Photos are served as AVIF/WebP in several sizes with explicit dimensions; only the first photo on a page loads eagerly.
+- **Consequences:** Lighthouse (mobile) on v1: performance 98–100, accessibility 100 (95 on Programs, where the mobile Join bar covers buttons at the very bottom of the first screen), best practices 100, SEO 100. Layout shift is effectively zero.
+
 ---
 
 ## Open questions
@@ -163,4 +209,5 @@ Open questions that still need an answer live at the end of this file.
 | Q-10 | Photo source files | 2026-10-14 | Resolved by D-020 |
 | Q-11 | Check-giving details on the Support page | 2026-10-15 | Resolved by D-019 |
 | Q-12 | Pin-up board placement | 2026-10-15 | Resolved by D-017 |
-| Q-13 | Scheduled rebuilds stop after 60 days without repo activity (GitHub rule for public repos). How to keep them running over summer? | 2026-10-15 | Open |
+| Q-13 | Keeping scheduled rebuilds running over summer | 2026-10-15 | Resolved by D-027 |
+| Q-14 | Book Club cadence: the site says "Every other Tuesday" but the calendar lists it weekly in November. Which is right? | 2026-10-15 | Open |
