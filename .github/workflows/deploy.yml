@@ -1,0 +1,52 @@
+# Builds the site and publishes it to GitHub Pages.
+#
+# Runs on every push to main, twice a day on a schedule (so the Events page
+# picks up new events from the ISA Google Calendar), and on demand from the
+# Actions tab ("Run workflow").
+#
+# Note: GitHub pauses scheduled runs after 60 days with no commits to the repo.
+# If events stop updating (for example after the summer), open the Actions tab,
+# select this workflow and click "Enable workflow". See README.md › Events.
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # 09:17 and 21:17 UTC (early morning and afternoon in Ann Arbor)
+    - cron: '17 9,21 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
