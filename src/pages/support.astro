@@ -1,0 +1,292 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import content from '../data/content.json';
+import { photo } from '../data/photos';
+import { links, mailto } from '../lib/site';
+
+// Until ISA has its own payment account, Donate goes to a temporary link (D-008, D-018).
+// Recurring and check gifts are arranged by email (D-019).
+const donate = links.donate;
+const monthly = links.donate_monthly ?? `${mailto}?subject=${encodeURIComponent('Monthly gift to ISA')}`;
+---
+
+<Base
+  title="Support ISA"
+  description="Your support keeps Thursday nights running. Gifts from alumni, families, and community members fund ISA's weekly programs, speakers, books, and Ramadan iftars."
+>
+  <section class="intro wrap" aria-labelledby="support-title">
+    <div>
+      <span class="eyebrow">Support ISA</span>
+      <h1 id="support-title" class="page-title">Your support keeps Thursday nights running.</h1>
+      <p class="lead">ISA is funded mostly through university grants applied for event by event. That funding is irregular, and it is often the only thing holding programs back. Gifts from alumni, families, and community members fill the gap.</p>
+      {
+        donate && (
+          <div class="give">
+            <a class="btn btn--navy" href={donate} target="_blank" rel="noopener">Donate</a>
+            {content.donate_note && <p class="donate-note">{content.donate_note}</p>}
+          </div>
+        )
+      }
+    </div>
+    <div class="intro-photo media">
+      <Photo photo={photo('DSCF2397')} sizes="(min-width: 900px) 420px, 100vw" priority />
+    </div>
+  </section>
+
+  <section class="enables band lattice" aria-labelledby="enables-title">
+    <div class="wrap enables-inner">
+      <h2 id="enables-title" class="section-title">What your support enables</h2>
+      <div class="enables-grid">
+        {
+          content.support_enables.map((item) => (
+            <div>
+              <span class="eyebrow eyebrow--sm">{item.label}</span>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="ways wrap">
+    <section class="way rule-navy" aria-labelledby="once-title">
+      <span class="eyebrow eyebrow--sm">Give once</span>
+      <h2 id="once-title">A one-time gift</h2>
+      <p>Any amount goes where it is most needed, based on the academic and Islamic calendars.</p>
+      {donate && <a class="btn btn--navy" href={donate} target="_blank" rel="noopener">Donate</a>}
+    </section>
+    <section class="way rule-maize" aria-labelledby="monthly-title">
+      <span class="eyebrow eyebrow--sm">Give monthly</span>
+      <h2 id="monthly-title">Sustain a semester</h2>
+      <p>Consistent monthly support lets the board plan speakers and iftars ahead of time instead of grant by grant.</p>
+      <a class="btn btn--outline" href={monthly}>Set up monthly</a>
+    </section>
+  </div>
+
+  <div class="other wrap">
+    <section aria-labelledby="orgs-title">
+      <h2 id="orgs-title" class="eyebrow eyebrow--sm">Organizations and mosques</h2>
+      <p>We welcome partnerships with community institutions and can share a written summary of programming and expenses with regular supporters.</p>
+      <a class="caps-link" href={mailto}>Email the e-board</a>
+    </section>
+    <section aria-labelledby="kind-title">
+      <h2 id="kind-title" class="eyebrow eyebrow--sm">In kind</h2>
+      <p>Books for Book Club, a projector for Thursday programs, and food for events are all useful. Ask us what is needed this semester.</p>
+      <a class="caps-link" href={mailto}>Get in touch</a>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .intro {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 64px;
+    align-items: center;
+    padding-top: 72px;
+    padding-bottom: 64px;
+  }
+
+  .intro .page-title {
+    margin-bottom: 20px;
+  }
+
+  .intro .lead {
+    max-width: 560px;
+    margin-bottom: 26px;
+  }
+
+  .give .btn {
+    padding: 14px 26px;
+  }
+
+  .donate-note {
+    max-width: 520px;
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  .intro-photo {
+    height: 420px;
+  }
+
+  .enables-inner {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  .enables h2 {
+    margin-bottom: 32px;
+  }
+
+  .enables-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+
+  .enables h3 {
+    margin: 8px 0 10px;
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  .enables p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--on-navy-body);
+  }
+
+  .ways {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding-top: 64px;
+    padding-bottom: 24px;
+  }
+
+  .way {
+    padding: 32px;
+    background: var(--panel);
+  }
+
+  .way h2 {
+    margin: 8px 0 10px;
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--ink-heading);
+  }
+
+  .way p {
+    margin-bottom: 18px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-body);
+  }
+
+  .way .btn {
+    padding: 12px 22px;
+  }
+
+  .other {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    padding-top: 24px;
+    padding-bottom: 80px;
+  }
+
+  .other p {
+    margin: 10px 0 14px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-body);
+  }
+
+  @media (max-width: 899.98px) {
+    .intro {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 32px 0 0;
+    }
+
+    .intro > div:first-child {
+      padding: 0 20px 24px;
+    }
+
+    .intro .page-title {
+      margin-bottom: 12px;
+    }
+
+    .intro .lead {
+      margin-bottom: 16px;
+    }
+
+    .give .btn {
+      display: flex;
+      width: 100%;
+      padding: 14px;
+    }
+
+    .donate-note {
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    .intro-photo {
+      width: calc(100% - 40px);
+      height: 240px;
+      margin: 0 20px 28px;
+    }
+
+    .enables-inner {
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+
+    .enables h2 {
+      margin-bottom: 6px;
+      font-size: 32px;
+    }
+
+    .enables-grid {
+      display: block;
+    }
+
+    .enables-grid > div {
+      padding: 12px 0;
+    }
+
+    .enables h3 {
+      margin: 2px 0 6px;
+      font-size: 22px;
+    }
+
+    .enables p {
+      font-size: 14px;
+    }
+
+    .ways {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 20px 12px 0;
+    }
+
+    .way {
+      padding: 20px;
+    }
+
+    .way h2 {
+      margin: 4px 0 6px;
+      font-size: 26px;
+    }
+
+    .way p {
+      margin-bottom: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .other {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+
+    .other p {
+      margin: 6px 0 10px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+  }
+</style>
