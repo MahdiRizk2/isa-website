@@ -1,0 +1,366 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import DiamondDivider from '../components/DiamondDivider.astro';
+import content from '../data/content.json';
+import { photo } from '../data/photos';
+import { links, mailto } from '../lib/site';
+
+const { org, board } = content;
+---
+
+<Base
+  title="About"
+  description="ISA is the Shia Muslim student community at the University of Michigan: student-run, a member of the Muslim Coalition, and open to anyone who wants to learn."
+>
+  <section class="intro wrap" aria-labelledby="about-title">
+    <div>
+      <span class="eyebrow">About</span>
+      <h1 id="about-title" class="page-title">The Shia Muslim student community at Michigan</h1>
+      <p class="lead">Student-run since its founding, ISA is a member of the Muslim Coalition at the University of Michigan and open to anyone who wants to learn.</p>
+    </div>
+    <div class="intro-photo media">
+      <Photo photo={photo('DSCF2344')} sizes="(min-width: 900px) 420px, 100vw" priority />
+    </div>
+  </section>
+
+  <div class="divider wrap only-desktop"><DiamondDivider /></div>
+
+  <section class="mission wrap" aria-labelledby="mission-title">
+    <h2 id="mission-title" class="eyebrow">Mission</h2>
+    <div class="mission-text">
+      <p class="mission-lead">{org.mission}</p>
+      {org.mission_extended.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </section>
+
+  <div class="facts wrap">
+    <div>
+      <h3 class="eyebrow eyebrow--sm">Student-run</h3>
+      <p>ISA is led by a student executive board elected each year. Programs are planned and run by students.</p>
+    </div>
+    <div>
+      <h3 class="eyebrow eyebrow--sm">Part of the Muslim Coalition</h3>
+      <p>ISA organizes under the Muslim Coalition at U-M alongside other Muslim student organizations, and collaborates with them through the year.</p>
+    </div>
+    <div>
+      <h3 class="eyebrow eyebrow--sm">Open to all</h3>
+      <p>Shia, Sunni, Muslim or not, student or not. If you want to learn or just be around good people, you are welcome.</p>
+    </div>
+  </div>
+
+  <section class="board band lattice" aria-labelledby="board-title">
+    <div class="wrap board-inner">
+      <div class="section-head">
+        <h2 id="board-title" class="section-title">{board.term} Executive Board</h2>
+        <a class="board-email only-desktop" href={mailto}>{links.email}</a>
+      </div>
+      <ul class="board-grid">
+        {
+          board.members.map((m) => (
+            <li class="member">
+              <span class="avatar" aria-hidden="true" />
+              <span class="member-text">
+                <span class="member-name">{m.name}</span>
+                <span class="member-role">{m.role}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="alumni wrap" aria-labelledby="alumni-title">
+    <div>
+      <span class="eyebrow eyebrow--sm">Alumni</span>
+      <h2 id="alumni-title">Graduated? Stay close.</h2>
+      <p>Alumni are invited back for speaker events, iftars, and the mass meeting, and are a big part of how ISA stays funded. Write to the alumni chair to stay on the list.</p>
+      <a class="btn btn--outline" href={mailto}>Email the e-board</a>
+    </div>
+    <div class="alumni-photo media only-desktop">
+      <Photo photo={photo('100_2894')} sizes="(min-width: 1200px) 528px, 45vw" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 64px;
+    align-items: center;
+    padding-top: 72px;
+    padding-bottom: 64px;
+  }
+
+  .intro .page-title {
+    margin-bottom: 24px;
+  }
+
+  .intro .lead {
+    max-width: 560px;
+  }
+
+  .intro-photo {
+    height: 420px;
+  }
+
+  .mission {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .mission .eyebrow {
+    padding-top: 10px;
+  }
+
+  .mission-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 720px;
+  }
+
+  .mission-text p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink-body);
+  }
+
+  .mission-text .mission-lead {
+    font-family: var(--serif);
+    font-size: 30px;
+    line-height: 1.35;
+    font-weight: 500;
+    color: var(--ink-heading);
+    text-wrap: pretty;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    padding-bottom: 72px;
+  }
+
+  .facts p {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-body);
+  }
+
+  .board-inner {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  .board .section-head {
+    margin-bottom: 28px;
+  }
+
+  .board-email {
+    font-size: 14px;
+    color: var(--maize);
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
+
+  .board-email:hover {
+    color: #fff;
+  }
+
+  .board-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .member {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 0;
+  }
+
+  .avatar {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 999px;
+    background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.12) 0 5px, rgba(255, 255, 255, 0.04) 5px 10px);
+  }
+
+  .member-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .member-name {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .member-role {
+    margin-top: 2px;
+    font-size: 13px;
+    color: var(--on-navy-muted);
+  }
+
+  .alumni {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    padding-top: 72px;
+    padding-bottom: 80px;
+  }
+
+  .alumni h2 {
+    margin: 8px 0 14px;
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--ink-heading);
+  }
+
+  .alumni p {
+    max-width: 520px;
+    margin-bottom: 20px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-body);
+  }
+
+  .alumni-photo {
+    height: 340px;
+  }
+
+  @media (max-width: 899.98px) {
+    .intro {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 32px 0 0;
+    }
+
+    .intro > div:first-child {
+      padding: 0 20px 20px;
+    }
+
+    .intro .page-title {
+      margin-bottom: 10px;
+    }
+
+    .intro-photo {
+      width: calc(100% - 40px);
+      height: 240px;
+      margin: 0 20px;
+    }
+
+    .mission {
+      display: block;
+      padding-top: 28px;
+      padding-bottom: 0;
+    }
+
+    .mission .eyebrow {
+      padding-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .mission-text {
+      gap: 12px;
+    }
+
+    .mission-text .mission-lead {
+      font-size: 22px;
+      line-height: 1.3;
+    }
+
+    .mission-text p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .facts {
+      display: block;
+      padding-top: 24px;
+      padding-bottom: 28px;
+    }
+
+    .facts > div {
+      padding: 14px 0;
+    }
+
+    .facts p {
+      margin-top: 6px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .board-inner {
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+
+    .board .section-head {
+      margin-bottom: 8px;
+    }
+
+    .board .section-title {
+      font-size: 32px;
+    }
+
+    .board-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .member {
+      gap: 12px;
+      padding: 12px 0;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+    }
+
+    .member-name {
+      font-size: 15px;
+    }
+
+    .member-role {
+      font-size: 12px;
+    }
+
+    .alumni {
+      display: block;
+      padding-top: 28px;
+      padding-bottom: 32px;
+    }
+
+    .alumni h2 {
+      margin: 6px 0 8px;
+      font-size: 30px;
+    }
+
+    .alumni p {
+      margin-bottom: 12px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+  }
+</style>
