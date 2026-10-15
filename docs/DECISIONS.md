@@ -189,7 +189,7 @@ Open questions that still need an answer live at the end of this file.
 - **Date:** 2026-10-15
 - **Decided by:** Mahdi Rizk (v1 build)
 - **Decision:** CSS is inlined into each page (it is small). Fonts are self-hosted with per-language subsets so only Latin files download, and the two main faces are preloaded. Photos are served as AVIF/WebP in several sizes with explicit dimensions; only the first photo on a page loads eagerly.
-- **Consequences:** Lighthouse (mobile) on v1: performance 98–100, accessibility 100 (95 on Programs, where the mobile Join bar covers buttons at the very bottom of the first screen), best practices 100, SEO 100. Layout shift is effectively zero.
+- **Consequences:** Lighthouse (mobile) on the live v1 site: performance 99–100, best practices 100, SEO 100, accessibility 100 on most pages. Programs and Events score 95–96 because the mobile Join bar covers whichever button happens to sit at the very bottom of the first screen; scrolling uncovers it. Layout shift is effectively zero.
 
 ---
 
