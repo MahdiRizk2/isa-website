@@ -53,8 +53,17 @@ export interface CalendarData {
   thisWeekIsLater: boolean;
   /** Everything not shown in `thisWeek`, grouped by month. */
   comingUp: MonthGroup[];
+  /** Past events, newest semester first. */
+  past: PastTerm[];
   weekStart: Date;
   source: 'calendar' | 'fallback';
+}
+
+/** One semester of past events: regular programs as counts, everything else listed. */
+export interface PastTerm {
+  label: string;
+  regulars: Array<{ title: string; count: number }>;
+  months: MonthGroup[];
 }
 
 interface FallbackEvent {
@@ -78,26 +87,87 @@ async function load(): Promise<CalendarData> {
   const now = new Date();
   const until = new Date(now.getTime() + LOOKAHEAD_DAYS * DAY_MS);
 
-  let events: CalendarEvent[] = [];
+  let all: CalendarEvent[] = [];
   let source: CalendarData['source'] = 'calendar';
   try {
-    events = await fromFeed(content.links.calendar_ical, now, until);
+    all = await fromFeed(content.links.calendar_ical, HISTORY_START, until);
   } catch (error) {
     console.warn(`[calendar] Could not read the calendar feed, using src/data/events.json instead: ${String(error)}`);
   }
-  if (events.length === 0) {
-    events = fromFallback(fallbackEvents as FallbackEvent[], now, until);
-    source = 'fallback';
+  if (!all.some((e) => e.end >= now)) {
+    const fallback = fromFallback(fallbackEvents as FallbackEvent[], HISTORY_START, until);
+    if (fallback.length > 0 || all.length === 0) {
+      all = [...all.filter((e) => e.end < now), ...fallback];
+      source = 'fallback';
+    }
   }
-  events.sort((a, b) => a.start.getTime() - b.start.getTime());
+  all.sort((a, b) => a.start.getTime() - b.start.getTime());
 
+  const events = all.filter((e) => e.end >= now);
   const weekEnd = new Date(now.getTime() + WEEK_DAYS * DAY_MS);
   const inWeek = events.filter((e) => e.start < weekEnd);
   const thisWeekIsLater = inWeek.length === 0;
   const thisWeek = pickThisWeek(thisWeekIsLater ? events : inWeek);
   const rest = events.filter((e) => !thisWeek.includes(e));
 
-  return { events, thisWeek, thisWeekIsLater, comingUp: groupByMonth(rest), weekStart: now, source };
+  return {
+    events,
+    thisWeek,
+    thisWeekIsLater,
+    comingUp: groupByMonth(rest),
+    past: groupPast(all),
+    weekStart: now,
+    source,
+  };
+}
+
+/** The past-events archive starts here (the calendar's history begins in fall 2025). */
+const HISTORY_START = new Date('2025-08-01T00:00:00-04:00');
+/** A title seen at least this many times on the calendar counts as a regular program. */
+const REGULAR_MIN = 3;
+
+function groupPast(all: CalendarEvent[]): PastTerm[] {
+  const now = Date.now();
+  const titleKey = (e: CalendarEvent) => e.title.toLowerCase().replace(/\s+/g, ' ').trim();
+  const seen = new Map<string, number>();
+  for (const e of all) seen.set(titleKey(e), (seen.get(titleKey(e)) ?? 0) + 1);
+
+  const past = all.filter((e) => e.end.getTime() < now).sort((a, b) => b.start.getTime() - a.start.getTime());
+  const terms: Array<{ label: string; events: CalendarEvent[] }> = [];
+  for (const e of past) {
+    const label = termOf(e.start);
+    const last = terms.at(-1);
+    if (last && last.label === label) last.events.push(e);
+    else terms.push({ label, events: [e] });
+  }
+
+  return terms.map(({ label, events }) => {
+    const regular = new Map<string, { title: string; count: number }>();
+    const others: CalendarEvent[] = [];
+    for (const e of events) {
+      const key = titleKey(e);
+      if ((seen.get(key) ?? 0) >= REGULAR_MIN) {
+        const entry = regular.get(key) ?? { title: e.title, count: 0 };
+        entry.count += 1;
+        regular.set(key, entry);
+      } else {
+        others.push(e);
+      }
+    }
+    return {
+      label,
+      regulars: [...regular.values()].sort((a, b) => b.count - a.count),
+      months: groupByMonth(others),
+    };
+  });
+}
+
+/** U-M terms: Winter (Jan–Apr), Spring & Summer (May–Aug), Fall (Sep–Dec). */
+function termOf(d: Date): string {
+  const [year, month] = isoDayFmt.format(d).split('-').map(Number) as [number, number];
+  if (month <= 4) return `Winter ${year}`;
+  if (month <= 8) return `Spring & Summer ${year}`;
+  return `Fall ${year}`;
 }
 
 async function fromFeed(url: string, from: Date, to: Date): Promise<CalendarEvent[]> {

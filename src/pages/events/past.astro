@@ -1,0 +1,169 @@
+---
+import Base from '../../layouts/Base.astro';
+import EventRow from '../../components/EventRow.astro';
+import { getCalendar } from '../../lib/calendar';
+import { url } from '../../lib/site';
+
+const { past } = await getCalendar();
+const since = past.at(-1)?.label;
+---
+
+<Base
+  title="Past events"
+  description="Everything the Islamic Society of Ahlulbayt has hosted at the University of Michigan: weekly programs, speakers, commemorations, and community events."
+>
+  <section class="intro wrap" aria-labelledby="past-title">
+    <span class="eyebrow">Events</span>
+    <h1 id="past-title" class="page-title">Past events</h1>
+    <p class="lead">
+      {since ? `Everything on the ISA calendar since ${since}, most recent first.` : 'Past events from the ISA calendar will appear here.'}
+    </p>
+    <a class="caps-link" href={url('/events')}>Upcoming events</a>
+  </section>
+
+  {
+    past.map((term) => (
+      <section class="term wrap" aria-label={term.label}>
+        <h2 class="sub-title term-title">{term.label}</h2>
+        <div class="term-body">
+          {term.regulars.length > 0 && (
+            <div class="regulars">
+              <h3 class="eyebrow eyebrow--sm">Regular programs</h3>
+              <ul>
+                {term.regulars.map((r) => (
+                  <li>
+                    <span class="regular-name">{r.title}</span>
+                    <span class="regular-count">
+                      {r.count} {r.count === 1 ? 'session' : 'sessions'}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {term.months.map((group) => (
+            <section class="month" aria-label={group.label}>
+              <h3 class="eyebrow eyebrow--sm month-title">{group.label}</h3>
+              <ol class="event-list">
+                {group.events.map((event) => (
+                  <EventRow event={event} past />
+                ))}
+              </ol>
+            </section>
+          ))}
+        </div>
+      </section>
+    ))
+  }
+
+  <div class="wrap back">
+    <a class="caps-link" href={url('/events')}>Upcoming events</a>
+  </div>
+</Base>
+
+<style>
+  .intro {
+    padding-top: 72px;
+    padding-bottom: 40px;
+  }
+
+  .intro .lead {
+    max-width: 640px;
+    margin-bottom: 22px;
+  }
+
+  .term {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    padding-top: 48px;
+    padding-bottom: 24px;
+  }
+
+  .term-title {
+    padding-top: 4px;
+  }
+
+  .regulars {
+    margin-bottom: 12px;
+    padding: 22px 24px;
+    background: var(--panel);
+  }
+
+  .regulars ul {
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .regulars li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 6px 0;
+    font-size: 16px;
+  }
+
+  .regular-name {
+    font-weight: 600;
+    color: var(--ink-heading);
+  }
+
+  .regular-count {
+    color: var(--ink-body);
+    white-space: nowrap;
+  }
+
+  .month-title {
+    padding: 18px 0 8px;
+  }
+
+  .event-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .back {
+    padding-top: 32px;
+    padding-bottom: 80px;
+  }
+
+  @media (max-width: 899.98px) {
+    .intro {
+      padding-top: 32px;
+      padding-bottom: 12px;
+    }
+
+    .intro .lead {
+      margin-bottom: 16px;
+    }
+
+    .term {
+      display: block;
+      padding-top: 28px;
+      padding-bottom: 8px;
+    }
+
+    .term-title {
+      margin-bottom: 12px;
+    }
+
+    .regulars {
+      padding: 18px;
+    }
+
+    .regulars li {
+      font-size: 14px;
+    }
+
+    .month-title {
+      padding: 14px 0 6px;
+    }
+
+    .back {
+      padding-top: 20px;
+      padding-bottom: 40px;
+    }
+  }
+</style>

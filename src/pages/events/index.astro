@@ -5,7 +5,7 @@ import EventRow from '../../components/EventRow.astro';
 import Placeholder from '../../components/Placeholder.astro';
 import content from '../../data/content.json';
 import { getCalendar } from '../../lib/calendar';
-import { links } from '../../lib/site';
+import { links, url } from '../../lib/site';
 
 const calendar = await getCalendar();
 const massMeetingDate = content.details.mass_meeting_date;
@@ -40,6 +40,7 @@ const massMeetingDate = content.details.mass_meeting_date;
           <div><dt>Every other Tuesday</dt><dd>Book Club &amp; Dua Tawassul</dd></div>
           <div><dt>Every Thursday</dt><dd>Dua Kumayl &amp; Discussion</dd></div>
           <div><dt>Once a month</dt><dd>Sisterhood and Brotherhood events</dd></div>
+          <div><dt>One Tuesday a month</dt><dd>Alumni career talks</dd></div>
         </dl>
         <p class="rhythm-note">Times and rooms are set each semester and posted in the Updates chat.</p>
       </section>
@@ -72,6 +73,10 @@ const massMeetingDate = content.details.mass_meeting_date;
         </section>
       )
     }
+
+    <div class="area-past">
+      <a class="caps-link" href={url('/events/past')}>See past events</a>
+    </div>
   </div>
 </Base>
 
@@ -105,7 +110,8 @@ const massMeetingDate = content.details.mass_meeting_date;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       'week rhythm'
-      'coming coming';
+      'coming coming'
+      'past past';
     column-gap: 64px;
     padding-top: 48px;
     padding-bottom: 80px;
@@ -121,6 +127,11 @@ const massMeetingDate = content.details.mass_meeting_date;
 
   .area-coming {
     grid-area: coming;
+  }
+
+  .area-past {
+    grid-area: past;
+    padding-top: 32px;
   }
 
   .rhythm .sub-title {
@@ -237,13 +248,19 @@ const massMeetingDate = content.details.mass_meeting_date;
       grid-template-areas:
         'week'
         'coming'
+        'past'
         'rhythm';
       padding: 24px 0 32px;
     }
 
     .area-week,
-    .area-coming {
+    .area-coming,
+    .area-past {
       padding-inline: 20px;
+    }
+
+    .area-past {
+      padding-top: 20px;
     }
 
     .coming {

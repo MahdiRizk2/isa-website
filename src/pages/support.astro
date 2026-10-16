@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import content from '../data/content.json';
 import { photo } from '../data/photos';
-import { links, mailto } from '../lib/site';
+import { links, mailto, url } from '../lib/site';
 
 // Until ISA has its own payment account, Donate goes to a temporary link (D-008, D-018).
 // Recurring and check gifts are arranged by email (D-019).
@@ -48,6 +48,7 @@ const monthly = links.donate_monthly ?? `${mailto}?subject=${encodeURIComponent(
           ))
         }
       </div>
+      <a class="caps-link past-link" href={url('/events/past')}>See what ISA has hosted</a>
     </div>
   </section>
 
@@ -142,6 +143,15 @@ const monthly = links.donate_monthly ?? `${mailto}?subject=${encodeURIComponent(
     font-size: 15px;
     line-height: 1.55;
     color: var(--on-navy-body);
+  }
+
+  .past-link {
+    margin-top: 40px;
+    color: #fff;
+  }
+
+  .past-link:hover {
+    color: var(--maize);
   }
 
   .ways {
@@ -253,6 +263,10 @@ const monthly = links.donate_monthly ?? `${mailto}?subject=${encodeURIComponent(
 
     .enables p {
       font-size: 14px;
+    }
+
+    .past-link {
+      margin-top: 16px;
     }
 
     .ways {

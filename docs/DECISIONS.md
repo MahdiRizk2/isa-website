@@ -191,6 +191,21 @@ Open questions that still need an answer live at the end of this file.
 - **Decision:** CSS is inlined into each page (it is small). Fonts are self-hosted with per-language subsets so only Latin files download, and the two main faces are preloaded. Photos are served as AVIF/WebP in several sizes with explicit dimensions; only the first photo on a page loads eagerly.
 - **Consequences:** Lighthouse (mobile) on the live v1 site: performance 99–100, best practices 100, SEO 100, accessibility 100 on most pages. Programs and Events score 95–96 because the mobile Join bar covers whichever button happens to sit at the very bottom of the first screen; scrolling uncovers it. Layout shift is effectively zero.
 
+## D-029 · Alumni career talks added to the site
+- **Date:** 2026-10-16
+- **Decided by:** Mahdi Rizk
+- **Decision:** The new monthly alumni career talks (first one: Ahmed Nasser, October 13, 2026) are a program in `content.json` with a feature section on Programs ("Suggest a speaker" emails the e-board), a line in the Events page weekly rhythm, and a sentence in the About page alumni section. They are left off the Home page grid with `"home": false`, which keeps that grid at the six items it was designed for.
+- **Alternatives:** Seven items on the Home grid (leaves one item alone on a third row); a four-column Home grid.
+- **Consequences:** The feature photo is a general lecture photo until there are photos from the talks themselves.
+
+## D-030 · Past events archive
+- **Date:** 2026-10-16
+- **Decided by:** Mahdi Rizk
+- **Decision:** A new page, `/events/past/`, lists everything on the ISA calendar since fall 2025 (where the calendar's history starts), newest first, grouped by U-M semester (Fall, Winter, Spring & Summer). Titles that appear three or more times on the calendar count as regular programs and are summarized as session counts ("Dua and Discussion · 10 sessions"); everything else is listed individually by month. Linked from the Events page ("See past events") and the Support page ("See what ISA has hosted").
+- **Alternatives:** Starting from the 2026-27 school year only; listing every weekly session individually.
+- **Why:** Lets donors and prospective members see how much ISA does over time. The design spec avoided statistics; per-program session counts are a deliberate, light exception because they summarize real calendar history rather than marketing numbers.
+- **Consequences:** The archive is only as good as the calendar. Events deleted from Google Calendar disappear from the archive at the next rebuild, so past events should be left on the calendar.
+
 ---
 
 ## Open questions
@@ -210,4 +225,4 @@ Open questions that still need an answer live at the end of this file.
 | Q-11 | Check-giving details on the Support page | 2026-10-15 | Resolved by D-019 |
 | Q-12 | Pin-up board placement | 2026-10-15 | Resolved by D-017 |
 | Q-13 | Keeping scheduled rebuilds running over summer | 2026-10-15 | Resolved by D-027 |
-| Q-14 | Book Club cadence: the site says "Every other Tuesday" but the calendar lists it weekly in November. Which is right? | 2026-10-15 | Open |
+| Q-14 | Tuesday schedule: the site says "Book Club & Dua Tawassul, every other Tuesday"; the planning notes say Dua Tawassul alternates with Book Club; the calendar lists Book Club weekly in November. What is the actual Tuesday rhythm? | 2026-10-15 | Open |

@@ -1,18 +1,20 @@
 ---
-// One row in the Events page "Coming up" list.
+// One row in an event list: "Coming up" on Events, or the Past events archive.
 import { formatDay, formatTime, formatWeekday, type CalendarEvent } from '../lib/calendar';
 import { url } from '../lib/site';
 
 interface Props {
   event: CalendarEvent;
+  /** Past events have no "Add to calendar" link. */
+  past?: boolean;
 }
 
-const { event } = Astro.props;
+const { event, past = false } = Astro.props;
 const time = formatTime(event);
 const ics = url(`/events/${event.id}.ics`);
 ---
 
-<li class="event">
+<li class:list={['event', { 'event--past': past }]}>
   <time class="date" datetime={event.start.toISOString()}>
     <span class="weekday">{formatWeekday(event.start)}</span>
     <span class="day">{formatDay(event.start)}</span>
@@ -26,10 +28,14 @@ const ics = url(`/events/${event.id}.ics`);
     {time}
     {event.place && <><br />{event.place}</>}
   </div>
-  <a class="add" href={ics} download aria-label={`Add to calendar: ${event.title}`}>
-    <span class="add-text only-desktop">Add to calendar</span>
-    <span class="add-plus only-mobile" aria-hidden="true">+</span>
-  </a>
+  {
+    !past && (
+      <a class="add" href={ics} download aria-label={`Add to calendar: ${event.title}`}>
+        <span class="add-text only-desktop">Add to calendar</span>
+        <span class="add-plus only-mobile" aria-hidden="true">+</span>
+      </a>
+    )
+  }
 </li>
 
 <style>
@@ -39,6 +45,10 @@ const ics = url(`/events/${event.id}.ics`);
     gap: 24px;
     align-items: center;
     padding: 18px 0;
+  }
+
+  .event--past {
+    grid-template-columns: 90px 1fr 240px;
   }
 
   .date {

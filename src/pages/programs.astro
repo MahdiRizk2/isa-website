@@ -4,9 +4,17 @@ import Photo from '../components/Photo.astro';
 import Placeholder from '../components/Placeholder.astro';
 import content from '../data/content.json';
 import { photo } from '../data/photos';
-import { links } from '../lib/site';
+import { links, mailto } from '../lib/site';
 
-const [thursday, bookClub, socials] = content.programs;
+const program = (slug: string) => {
+  const found = content.programs.find((p) => p.slug === slug);
+  if (!found) throw new Error(`Program "${slug}" is missing from src/data/content.json`);
+  return found;
+};
+const thursday = program('dua-kumayl-discussion');
+const bookClub = program('book-club-dua-tawassul');
+const socials = program('sisterhood-brotherhood');
+const careers = program('alumni-career-talks');
 const currentBook = content.details.current_book;
 ---
 
@@ -22,12 +30,12 @@ const currentBook = content.details.current_book;
 
   <section class="feature wrap" aria-labelledby="p-thursday">
     <div class="feature-photo media">
-      <Photo photo={photo(thursday!.photo!)} sizes="(min-width: 1200px) 528px, (min-width: 900px) 45vw, 100vw" priority />
+      <Photo photo={photo(thursday.photo!)} sizes="(min-width: 1200px) 528px, (min-width: 900px) 45vw, 100vw" priority />
     </div>
     <div class="feature-text">
-      <span class="eyebrow eyebrow--sm">{thursday!.cadence}</span>
-      <h2 id="p-thursday">{thursday!.title}</h2>
-      <p>{thursday!.long}</p>
+      <span class="eyebrow eyebrow--sm">{thursday.cadence}</span>
+      <h2 id="p-thursday">{thursday.title}</h2>
+      <p>{thursday.long}</p>
       <div class="actions">
         <a class="btn btn--outline" href={links.discussion_resources} target="_blank" rel="noopener">Discussion resources</a>
         <a class="btn btn--outline" href={links.request_topic_form} target="_blank" rel="noopener">Request a topic</a>
@@ -37,12 +45,12 @@ const currentBook = content.details.current_book;
 
   <section class="feature feature--flip wrap" aria-labelledby="p-book">
     <div class="feature-photo media">
-      <Photo photo={photo(bookClub!.photo!)} sizes="(min-width: 1200px) 528px, (min-width: 900px) 45vw, 100vw" />
+      <Photo photo={photo(bookClub.photo!)} sizes="(min-width: 1200px) 528px, (min-width: 900px) 45vw, 100vw" />
     </div>
     <div class="feature-text">
-      <span class="eyebrow eyebrow--sm">{bookClub!.cadence}</span>
-      <h2 id="p-book">{bookClub!.title}</h2>
-      <p>{bookClub!.long}</p>
+      <span class="eyebrow eyebrow--sm">{bookClub.cadence}</span>
+      <h2 id="p-book">{bookClub.title}</h2>
+      <p>{bookClub.long}</p>
       <div class="actions">
         <a class="btn btn--outline" href={links.book_club_form} target="_blank" rel="noopener">Suggest a book</a>
         {currentBook ? <span class="current-book">Reading now: {currentBook}</span> : <Placeholder>[Current book]</Placeholder>}
@@ -52,15 +60,29 @@ const currentBook = content.details.current_book;
 
   <section class="feature wrap" aria-labelledby="p-socials">
     <div class="feature-photo media">
-      <Photo photo={photo(socials!.photo!)} sizes="(min-width: 1200px) 528px, (min-width: 900px) 45vw, 100vw" />
+      <Photo photo={photo(socials.photo!)} sizes="(min-width: 1200px) 528px, (min-width: 900px) 45vw, 100vw" />
     </div>
     <div class="feature-text">
-      <span class="eyebrow eyebrow--sm">{socials!.cadence}</span>
-      <h2 id="p-socials">{socials!.title}</h2>
-      <p>{socials!.long}</p>
+      <span class="eyebrow eyebrow--sm">{socials.cadence}</span>
+      <h2 id="p-socials">{socials.title}</h2>
+      <p>{socials.long}</p>
       <div class="actions">
         <a class="btn btn--outline" href={links.sisterhood_chat} target="_blank" rel="noopener">Sisterhood chat</a>
         <a class="btn btn--outline" href={links.brotherhood_chat} target="_blank" rel="noopener">Brotherhood chat</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature feature--flip wrap" aria-labelledby="p-careers">
+    <div class="feature-photo media">
+      <Photo photo={photo(careers.photo!)} sizes="(min-width: 1200px) 528px, (min-width: 900px) 45vw, 100vw" />
+    </div>
+    <div class="feature-text">
+      <span class="eyebrow eyebrow--sm">{careers.cadence}</span>
+      <h2 id="p-careers">{careers.title}</h2>
+      <p>{careers.long}</p>
+      <div class="actions">
+        <a class="btn btn--outline" href={`${mailto}?subject=${encodeURIComponent('Alumni career talk')}`}>Suggest a speaker</a>
       </div>
     </div>
   </section>

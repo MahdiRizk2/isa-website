@@ -62,7 +62,7 @@ const row = ['IMG_4335', 'adc8466d', '4db790e4', 'IMG_2628', '3f3fdbc7'].map(pho
     </div>
     <div class="program-grid">
       {
-        content.programs.map((p) => (
+        content.programs.filter((p) => !('home' in p) || p.home !== false).map((p) => (
           <div class="program">
             <span class="eyebrow eyebrow--sm">{p.cadence}</span>
             <h3>{p.title}</h3>

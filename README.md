@@ -39,7 +39,7 @@ You do not need to be a developer to keep this site up to date. Most updates are
   - `current_book`: shown next to "Suggest a book" on Programs.
   - `mass_meeting_date`: shown in the Mass Meeting panel on Events, written as you want it displayed (for example `"Thursday, September 10, 7 PM"`).
   - `programs_resume_month`: used in the "No events scheduled yet" message when the calendar is empty (for example `"September"`).
-- **`programs`**: the six regular programs. The first three have a `photo` (a photo id from `src/data/photos.ts`) and appear as large features on Programs.
+- **`programs`**: the regular programs. Those with a `photo` (a photo id from `src/data/photos.ts`) appear as large features on Programs. Add `"home": false` to leave a program out of the Home page grid, which is designed for six.
 - **`board`**: `term` (for example `"2027-28"`) is used in the heading; `members` is shown in order.
 - **`credit`**: the "Site by" line in the footer.
 
@@ -71,6 +71,7 @@ What appears on the site:
 - **"This week"** (Home and Events): up to three events in the next 7 days, always including the Thursday program. If nothing is on this week it shows the next few events instead.
 - **"Coming up"** (Events): everything else in the next 90 days, grouped by month, each with an "Add to calendar" file.
 - For each event: the title, date, start time, the part of the location before the first comma, and the first line of the description.
+- **Past events** (`/events/past/`): everything on the calendar since fall 2025, grouped by semester. Event titles used three or more times count as regular programs and show as session counts. **Don't delete past events from the calendar**; they would disappear from the archive.
 
 Calendar tips for whoever manages it:
 
