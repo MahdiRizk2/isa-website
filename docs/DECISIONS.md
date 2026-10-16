@@ -209,10 +209,10 @@ Open questions that still need an answer live at the end of this file.
 ## D-031 · Feedback form that emails the e-board
 - **Date:** 2026-10-16
 - **Decided by:** Mahdi Rizk
-- **Decision:** A feedback page (`/feedback/`) for corrections, bugs and ideas, linked from every page's footer with the current page pre-selected. Messages go to the e-board inbox through Web3Forms, a free form-to-email service, once its access key is added to `content.json`. Until then, sending opens the visitor's email app with the message filled in.
+- **Decision:** A feedback page (`/feedback/`) for corrections, bugs and ideas, linked from every page's footer with the current page pre-selected. Messages go to the e-board email address (an MCommunity group that delivers to every board member) through Web3Forms, a free form-to-email service, once its access key is added to `content.json`. Until then, sending opens the visitor's email app with the message filled in.
 - **Alternatives:** A `mailto:` link only (fails for people without a desktop email app); a Google Form (leaves the site, can't match the design); Formspree (smaller free tier, needs an account login).
-- **Why:** The site is static and has no server to send email. Web3Forms needs no login, ties the key to the e-board inbox rather than a person, and its free tier (about 250 messages a month) is far more than ISA needs. The key is designed to be public.
-- **Consequences:** Someone with access to the e-board inbox has to create the key (see README.md › Feedback and photo reports). Spam protection is a hidden honeypot field; if spam becomes a problem, rotate the key.
+- **Why:** The site is static and has no server to send email. Web3Forms needs no login, ties the key to the e-board address rather than a person, and its free tier (about 250 messages a month) is far more than ISA needs. The key is designed to be public.
+- **Consequences:** The key is emailed to the e-board address, so any board member can receive it and add it (see README.md › Feedback and photo reports). If the MCommunity group blocks outside senders, the key email and the form messages would bounce; a group owner can allow them. Spam protection is a hidden honeypot field; if spam becomes a problem, rotate the key.
 
 ## D-032 · Photo report form
 - **Date:** 2026-10-16
@@ -240,4 +240,5 @@ Open questions that still need an answer live at the end of this file.
 | Q-12 | Pin-up board placement | 2026-10-15 | Resolved by D-017 |
 | Q-13 | Keeping scheduled rebuilds running over summer | 2026-10-15 | Resolved by D-027 |
 | Q-14 | Tuesday schedule: the site says "Book Club & Dua Tawassul, every other Tuesday"; the planning notes say Dua Tawassul alternates with Book Club; the calendar lists Book Club weekly in November. What is the actual Tuesday rhythm? | 2026-10-15 | Open |
-| Q-15 | Who will create the Web3Forms key? It is emailed to the e-board inbox, so it needs someone with access to that inbox. | 2026-10-16 | Open |
+| Q-15 | Create the Web3Forms key with the e-board address and confirm the key email arrives (proves the MCommunity group accepts outside senders). | 2026-10-16 | Open |
+| Q-16 | The e-board address is an MCommunity group with no login of its own. Should ISA get an org-owned account (a U-M Shared Account, which a faculty or staff advisor must request and own, or a dedicated Gmail) to own the calendar, forms, domain, GitHub organization and other services? | 2026-10-16 | Open |

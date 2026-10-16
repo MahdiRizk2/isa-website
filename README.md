@@ -90,7 +90,7 @@ If the calendar cannot be read, the site falls back to `src/data/events.json` (a
 
 ## Feedback and photo reports
 
-Two forms send messages straight to the e-board inbox (`links.email` in `content.json`):
+Two forms send messages to the e-board email address (`links.email` in `content.json`). That address is a U-M MCommunity group, so every message lands in every board member's own inbox:
 
 - **`/feedback/`**: corrections, bugs and ideas. Every page's footer links to it ("Send feedback") and pre-selects the page the visitor was on.
 - **`/photos/report/`**: someone picks a photo and says why it should come down. The email names the exact file (for example `IMG_4335.jpg`), so removing it means deleting that line from `src/data/photos.ts` (and the file from `src/assets/photos/`).
@@ -99,8 +99,9 @@ How they send:
 
 - **With a Web3Forms key** (recommended): messages go straight from the page, with no email app needed. [Web3Forms](https://web3forms.com) is a free form-to-email service (about 250 messages a month on the free plan).
   1. On web3forms.com, choose "Create Access Key" and enter the e-board email address.
-  2. The key arrives in the e-board inbox. Paste it into `content.json` › `feedback` › `web3forms_key` (keep the quotes) and commit.
-  3. The key is meant to be public; it only lets people send messages to that inbox. If spam ever becomes a problem, create a new key and replace it.
+  2. The key is emailed to that address, so every board member receives it. Paste it into `content.json` › `feedback` › `web3forms_key` (keep the quotes) and commit.
+  3. The key is meant to be public; it only lets people send messages to that address. If spam ever becomes a problem, create a new key and replace it.
+  4. If the key email never arrives, the MCommunity group is probably blocking senders from outside U-M. A group owner can change this in the group's privacy settings at mcommunity.umich.edu (allow outside senders, or give an owner the "Receive Unpermitted Messages" role so blocked mail is held for approval instead of bounced).
 - **Without a key** (`"web3forms_key": null`): pressing Send opens the visitor's email app with the message filled in, addressed to the e-board.
 
 ---
@@ -171,7 +172,8 @@ When ISA's domain (for example `isahlulbayt.com`) is ready:
 The repo, hosting and (soon) the domain are currently held by Mahdi Rizk (see D-013 in the decision log). Before the next handover:
 
 - [ ] Create an ISA GitHub organization and transfer this repo to it (GitHub keeps redirects from the old URL).
-- [ ] Move the domain to a registrar account that uses the shared e-board email, with auto-renew on.
+- [ ] Make sure the **ISA Google Calendar** has several owners (Settings › Share with specific people › "Make changes and manage sharing"). The website's events come from it, and if its only owner graduates and loses their U-M account, the calendar and the site's events go with it. Same for the Google Forms the site links to.
+- [ ] Move the domain to a registrar account ISA controls, with auto-renew on. The e-board address is an MCommunity group, not a login, so accounts need an org-owned account (see Q-16 in the decision log).
 - [ ] Replace the temporary Venmo donation link and remove `donate_note` once ISA has a permanent way to give.
 - [ ] Move the pin-up board (Padlet) to an ISA-owned account.
 - [ ] Give the new web lead admin access, and walk them through this README.
