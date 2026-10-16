@@ -1,0 +1,32 @@
+---
+// Shown after a form is sent without JavaScript (the form service redirects here).
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/site';
+---
+
+<Base title="Thank you" description="Your message has been sent to the Islamic Society of Ahlulbayt e-board.">
+  <section class="wrap thanks" aria-labelledby="thanks-title">
+    <span class="eyebrow">Feedback</span>
+    <h1 id="thanks-title" class="page-title">Thank you.</h1>
+    <p class="lead">Your message is on its way to the e-board.</p>
+    <a class="btn btn--navy" href={url('/')}>Back to the home page</a>
+  </section>
+</Base>
+
+<style>
+  .thanks {
+    padding-top: 96px;
+    padding-bottom: 120px;
+  }
+
+  .lead {
+    margin-bottom: 28px;
+  }
+
+  @media (max-width: 899.98px) {
+    .thanks {
+      padding-top: 48px;
+      padding-bottom: 64px;
+    }
+  }
+</style>

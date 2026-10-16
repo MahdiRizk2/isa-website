@@ -31,6 +31,9 @@
     "donate": "https://venmo.com/code?user_id=4171126905243316883&created=1792093979",
     "donate_monthly": null
   },
+  "feedback": {
+    "web3forms_key": null
+  },
   "donate_note": "For now, online gifts go through the Venmo of Mahdi Rizk, ISA's advisor, and are passed directly to ISA. This is a temporary arrangement while we set up a permanent way to give once or monthly.",
   "details": {
     "current_book": null,

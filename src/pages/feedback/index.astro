@@ -1,0 +1,163 @@
+---
+import Base from '../../layouts/Base.astro';
+import FeedbackForm from '../../components/FeedbackForm.astro';
+import { links, url } from '../../lib/site';
+
+const topics = [
+  'Something is wrong or out of date',
+  "Something isn't working",
+  'An idea or suggestion',
+  'Other',
+];
+
+// Values match pagePath() so footer links can pre-select the page someone came from.
+const pages = [
+  { value: '/', label: 'Home' },
+  { value: '/events', label: 'Events' },
+  { value: '/events/past', label: 'Past events' },
+  { value: '/programs', label: 'Programs' },
+  { value: '/photos', label: 'Photos' },
+  { value: '/about', label: 'About' },
+  { value: '/join', label: 'Join' },
+  { value: '/support', label: 'Support' },
+  { value: 'Whole site', label: 'The whole site / not sure' },
+];
+---
+
+<Base
+  title="Feedback"
+  description="Spotted something wrong, found a bug, or have an idea for the Islamic Society of Ahlulbayt website? Send it to the e-board."
+>
+  <section class="intro wrap" aria-labelledby="feedback-title">
+    <span class="eyebrow">Feedback</span>
+    <h1 id="feedback-title" class="page-title">Help us get it right</h1>
+    <p class="lead">
+      Spotted something wrong or out of date, found something broken, or have an idea for the site? This goes straight to the
+      e-board.
+    </p>
+  </section>
+
+  <div class="layout wrap">
+    <FeedbackForm subject="Website feedback" subjectField="topic" submitLabel="Send feedback">
+      <fieldset class="field">
+        <legend>What is this about?</legend>
+        <div class="choices">
+          {
+            topics.map((topic, i) => (
+              <label class="choice">
+                <input type="radio" name="topic" value={topic} data-label="Topic" required checked={i === 0} />
+                {topic}
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label class="field-label" for="fb-page">Which page?</label>
+        <select class="input" id="fb-page" name="page" data-label="Page">
+          {pages.map((p) => <option value={p.value}>{p.label}</option>)}
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="fb-message">Your message</label>
+        <textarea
+          class="input"
+          id="fb-message"
+          name="message"
+          data-label="Message"
+          required
+          minlength="5"
+          placeholder="What should change, or what happened?"></textarea>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label class="field-label" for="fb-name">Name <span class="field-hint">optional</span></label>
+          <input class="input" id="fb-name" name="name" data-label="Name" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label class="field-label" for="fb-email">Email <span class="field-hint">optional, if you'd like a reply</span></label>
+          <input class="input" id="fb-email" name="email" type="email" data-label="Email" autocomplete="email" />
+        </div>
+      </div>
+    </FeedbackForm>
+
+    <aside class="aside" aria-label="Other ways to reach us">
+      <div class="panel">
+        <span class="eyebrow eyebrow--sm">A photo of you?</span>
+        <p>If you want a photo taken down, use the photo report form so you can point to the exact one.</p>
+        <a class="caps-link" href={url('/photos/report')}>Report a photo</a>
+      </div>
+      <p class="aside-note">
+        You can also email <a href={`mailto:${links.email}`}>{links.email}</a> or message
+        <a href={links.instagram} target="_blank" rel="noopener">{links.instagram_handle}</a>.
+      </p>
+    </aside>
+  </div>
+</Base>
+
+<style>
+  .intro {
+    padding-top: 72px;
+    padding-bottom: 40px;
+  }
+
+  .intro .lead {
+    max-width: 640px;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 64px;
+    align-items: start;
+    padding-bottom: 80px;
+  }
+
+  .layout > :global(form) {
+    max-width: 720px;
+  }
+
+  .panel p {
+    margin: 8px 0 14px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-body);
+  }
+
+  .aside .panel {
+    padding: 24px;
+  }
+
+  .aside-note {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-body);
+  }
+
+  .aside-note a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 899.98px) {
+    .intro {
+      padding-top: 32px;
+      padding-bottom: 20px;
+    }
+
+    .layout {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+    }
+
+    .aside .panel {
+      padding: 18px;
+    }
+  }
+</style>

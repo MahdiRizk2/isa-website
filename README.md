@@ -20,6 +20,7 @@ You do not need to be a developer to keep this site up to date. Most updates are
 | Add the current Book Club book or the mass meeting date | `src/data/content.json` › `details` |
 | Change the donation link or the note under it | `src/data/content.json` › `links.donate`, `donate_note` |
 | Add, remove or reorder photos | `src/assets/photos/` and `src/data/photos.ts` |
+| Turn on direct sending for the feedback forms | `src/data/content.json` › `feedback` (see below) |
 | Add or change an event | The ISA Google Calendar (not this repo) |
 | Change other text on a page | `src/pages/<page>.astro` |
 
@@ -87,6 +88,23 @@ If the calendar cannot be read, the site falls back to `src/data/events.json` (a
 
 ---
 
+## Feedback and photo reports
+
+Two forms send messages straight to the e-board inbox (`links.email` in `content.json`):
+
+- **`/feedback/`**: corrections, bugs and ideas. Every page's footer links to it ("Send feedback") and pre-selects the page the visitor was on.
+- **`/photos/report/`**: someone picks a photo and says why it should come down. The email names the exact file (for example `IMG_4335.jpg`), so removing it means deleting that line from `src/data/photos.ts` (and the file from `src/assets/photos/`).
+
+How they send:
+
+- **With a Web3Forms key** (recommended): messages go straight from the page, with no email app needed. [Web3Forms](https://web3forms.com) is a free form-to-email service (about 250 messages a month on the free plan).
+  1. On web3forms.com, choose "Create Access Key" and enter the e-board email address.
+  2. The key arrives in the e-board inbox. Paste it into `content.json` › `feedback` › `web3forms_key` (keep the quotes) and commit.
+  3. The key is meant to be public; it only lets people send messages to that inbox. If spam ever becomes a problem, create a new key and replace it.
+- **Without a key** (`"web3forms_key": null`): pressing Send opens the visitor's email app with the message filled in, addressed to the e-board.
+
+---
+
 ## Working on the site locally
 
 You need [Node.js 24](https://nodejs.org) (the version is pinned in `.nvmrc`).
@@ -116,6 +134,7 @@ src/
 public/                 favicon, social preview image (og.png)
 design_handoff/         the original design specification (reference only; content.json there is outdated)
 docs/DECISIONS.md       decision log
+docs/ROADMAP.md         ideas and planned features, not built yet
 ```
 
 ### Design rules

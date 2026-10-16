@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import logo from '../assets/logo/ISA_Logo_Yellow-Clear.png';
 import content from '../data/content.json';
-import { links, url } from '../lib/site';
+import { links, pagePath, url } from '../lib/site';
 
 interface Props {
   /** The star lattice is off on Home, where the last section is already a lattice band. */
@@ -10,6 +10,7 @@ interface Props {
 }
 const { lattice = true } = Astro.props;
 const { credit } = content;
+const feedback = `${url('/feedback')}?page=${encodeURIComponent(pagePath(Astro.url.pathname))}`;
 ---
 
 <footer class:list={['site-footer', { 'lattice-soft': lattice }]}>
@@ -42,6 +43,7 @@ const { credit } = content;
       <a href={links.pin_up_board} target="_blank" rel="noopener">Pin-up board</a>
       <a href={url('/support')}>Support ISA</a>
       <a href={url('/join')}>Join</a>
+      <a href={feedback}>Send feedback</a>
     </div>
   </div>
 
@@ -50,6 +52,7 @@ const { credit } = content;
     <span>University of Michigan, Ann Arbor · A member of the Muslim Coalition</span>
     <a class="compact-link" href={`mailto:${links.email}`}>{links.email}</a>
     <a class="compact-link" href={links.instagram} target="_blank" rel="noopener">{links.instagram_handle}</a>
+    <a class="compact-link" href={feedback}>Send feedback</a>
   </div>
 
   <div class="wrap credit">

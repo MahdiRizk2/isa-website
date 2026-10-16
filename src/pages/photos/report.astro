@@ -1,0 +1,166 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import FeedbackForm from '../../components/FeedbackForm.astro';
+import { gallery } from '../../data/photos';
+import { url } from '../../lib/site';
+---
+
+<Base
+  title="Report a photo"
+  description="Ask the Islamic Society of Ahlulbayt e-board to take down a photo from the website."
+>
+  <section class="intro wrap" aria-labelledby="report-title">
+    <span class="eyebrow">Photos</span>
+    <h1 id="report-title" class="page-title">Report a photo</h1>
+    <p class="lead">
+      Pick the photo and tell us why it should come down. It goes straight to the e-board, and photos are taken down when someone in
+      them asks.
+    </p>
+  </section>
+
+  <div class="wrap form-wrap">
+    <FeedbackForm subject="Photo report" subjectField="photo" submitLabel="Send report">
+      <fieldset class="field">
+        <legend>Which photo?</legend>
+        <div class="photo-grid">
+          {
+            gallery.map((p) => (
+              <label class="photo-choice">
+                <input
+                  class="sr-only"
+                  type="radio"
+                  name="photo"
+                  value={`${p.id}.jpg — ${p.alt}`}
+                  data-id={p.id}
+                  data-label="Photo"
+                  required
+                />
+                <Image src={p.src} alt={p.alt} width={240} height={180} fit="cover" loading="lazy" decoding="async" />
+                <span class="selected" aria-hidden="true">Selected</span>
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label class="field-label" for="pr-reason">Why should it come down?</label>
+        <textarea
+          class="input"
+          id="pr-reason"
+          name="reason"
+          data-label="Reason"
+          required
+          minlength="3"
+          placeholder="For example: I'm in this photo and would rather it not be online."></textarea>
+      </div>
+
+      <div class="field narrow">
+        <label class="field-label" for="pr-name">Name <span class="field-hint">optional</span></label>
+        <input class="input" id="pr-name" name="name" data-label="Name" autocomplete="name" />
+      </div>
+    </FeedbackForm>
+
+    <a class="caps-link back" href={url('/photos')}>Back to photos</a>
+  </div>
+</Base>
+
+<style>
+  .intro {
+    padding-top: 72px;
+    padding-bottom: 40px;
+  }
+
+  .intro .lead {
+    max-width: 640px;
+  }
+
+  .form-wrap {
+    padding-bottom: 80px;
+  }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 6px;
+  }
+
+  .photo-choice {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    outline: 4px solid transparent;
+    outline-offset: 2px;
+  }
+
+  .photo-choice :global(img) {
+    display: block;
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+  }
+
+  .photo-choice:hover :global(img) {
+    opacity: 0.85;
+  }
+
+  .photo-choice:has(input:checked) {
+    outline-color: var(--maize);
+  }
+
+  .photo-choice:has(input:focus-visible) {
+    outline-color: var(--navy);
+  }
+
+  .selected {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: none;
+    padding: 4px 8px;
+    background: var(--maize);
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .photo-choice:has(input:checked) .selected {
+    display: block;
+  }
+
+  .form-wrap :global(.feedback-form) > .field:not(fieldset) {
+    max-width: 720px;
+  }
+
+  .narrow {
+    max-width: 480px;
+  }
+
+  .back {
+    margin-top: 40px;
+  }
+
+  @media (max-width: 899.98px) {
+    .intro {
+      padding-top: 32px;
+      padding-bottom: 20px;
+    }
+
+    .photo-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .photo-choice :global(img) {
+      height: 90px;
+    }
+
+    .form-wrap {
+      padding-bottom: 40px;
+    }
+  }
+</style>

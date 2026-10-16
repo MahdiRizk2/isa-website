@@ -1,0 +1,168 @@
+---
+// Wraps a form whose answers are emailed to the e-board.
+//
+// With `feedback.web3forms_key` set in content.json, the form sends through
+// Web3Forms (https://web3forms.com), which forwards each submission to the
+// e-board inbox. Without a key, submitting opens the visitor's email app with
+// the message filled in instead. See README.md › Feedback and photo reports.
+import content from '../data/content.json';
+import { url } from '../lib/site';
+
+interface Props {
+  /** Start of the email subject, e.g. "Website feedback". */
+  subject: string;
+  /** Name of the field whose answer is added to the subject, e.g. "topic". */
+  subjectField?: string;
+  submitLabel: string;
+}
+
+const { subject, subjectField, submitLabel } = Astro.props;
+const key = content.feedback.web3forms_key;
+const email = content.links.email;
+const thanks = new URL(url('/feedback/thanks'), Astro.site).href;
+---
+
+<form
+  class="feedback-form"
+  data-feedback-form
+  data-key={key ?? ''}
+  data-email={email}
+  data-subject={subject}
+  data-subject-field={subjectField}
+  action={key ? 'https://api.web3forms.com/submit' : `mailto:${email}?subject=${encodeURIComponent(subject)}`}
+  method="post"
+  enctype={key ? undefined : 'text/plain'}
+>
+  {key && <input type="hidden" name="access_key" value={key} />}
+  {key && <input type="hidden" name="redirect" value={thanks} />}
+  <input type="hidden" name="subject" value={subject} />
+  <input type="hidden" name="from_name" value="ISA website" />
+  <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+  <slot />
+
+  <div class="form-actions">
+    <button class="btn btn--navy" type="submit">{submitLabel}</button>
+    <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+  </div>
+  {!key && <p class="form-note">Sending opens your email app with your message ready to go to {email}.</p>}
+</form>
+
+<script>
+  const ENDPOINT = 'https://api.web3forms.com/submit';
+  // Fields that are for the form service, not for the person reading the email.
+  const TECHNICAL = new Set(['access_key', 'redirect', 'subject', 'from_name', 'botcheck']);
+
+  for (const form of document.querySelectorAll<HTMLFormElement>('[data-feedback-form]')) {
+    const status = form.querySelector<HTMLElement>('[data-form-status]')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const { email, subject, subjectField } = form.dataset;
+
+    // Pre-fill choices from the link, e.g. /feedback/?page=/events/ or /photos/report/?photo=IMG_4335
+    for (const [name, value] of new URLSearchParams(window.location.search)) {
+      const field = form.elements.namedItem(name);
+      if (field instanceof RadioNodeList) {
+        for (const option of field) {
+          const radio = option as HTMLInputElement;
+          if ((radio.dataset.id ?? radio.value) === value) radio.checked = true;
+        }
+      } else if (field instanceof HTMLSelectElement && [...field.options].some((o) => o.value === value)) {
+        field.value = value;
+      }
+    }
+
+    const setStatus = (message: string, state: 'info' | 'success' | 'error' = 'info') => {
+      status.textContent = message;
+      status.dataset.state = state;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const key = form.dataset.key;
+      const data = new FormData(form);
+      if (data.get('botcheck')) return;
+      const extra = subjectField ? String(data.get(subjectField) ?? '').split(' — ')[0] : '';
+      const fullSubject = extra ? `${subject}: ${extra}` : (subject ?? 'Website feedback');
+      data.set('subject', fullSubject);
+
+      if (!key) {
+        const lines: string[] = [];
+        for (const element of form.elements) {
+          const field = element as HTMLInputElement;
+          if (!field.name || TECHNICAL.has(field.name)) continue;
+          if ((field.type === 'radio' || field.type === 'checkbox') && !field.checked) continue;
+          const value = String(field.value ?? '').trim();
+          if (!value) continue;
+          lines.push(`${field.dataset.label ?? field.name}: ${value}`);
+        }
+        lines.push('', `Sent from ${window.location.href}`);
+        window.location.href = `mailto:${email}?subject=${encodeURIComponent(fullSubject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+        setStatus('Your email app should open with the message ready to send.');
+        return;
+      }
+
+      data.delete('redirect');
+      data.set('access_key', key);
+      data.set('Sent from', window.location.href);
+      button.disabled = true;
+      setStatus('Sending…');
+      try {
+        const response = await fetch(ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+        const result = await response.json();
+        if (!response.ok || !result.success) throw new Error(result?.body?.message ?? response.statusText);
+        form.reset();
+        setStatus('Thank you. Your message is on its way to the e-board.', 'success');
+      } catch {
+        setStatus(`Sorry, that didn't go through. Please email ${email} instead.`, 'error');
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+</script>
+
+<style>
+  .feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .botcheck {
+    display: none;
+  }
+
+  .form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 24px;
+  }
+
+  .form-status {
+    font-size: 15px;
+    color: var(--ink-body);
+  }
+
+  .form-status:empty {
+    display: none;
+  }
+
+  .form-status[data-state='success'] {
+    font-weight: 600;
+    color: var(--ink-heading);
+  }
+
+  .form-status[data-state='error'] {
+    font-weight: 600;
+    color: #8f1d1d;
+  }
+
+  .form-note {
+    margin-top: -12px;
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+</style>

@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import Placeholder from '../components/Placeholder.astro';
 import { gallery } from '../data/photos';
-import { links } from '../lib/site';
+import { links, url } from '../lib/site';
 ---
 
 <Base title="Photos" description="Photos from the last few semesters of the Islamic Society of Ahlulbayt at the University of Michigan.">
@@ -11,6 +11,7 @@ import { links } from '../lib/site';
     <span class="eyebrow">Photos</span>
     <h1 id="photos-title" class="page-title">From the last few semesters</h1>
     <p class="lead">Tag <a href={links.instagram} target="_blank" rel="noopener">{links.instagram_handle}</a> to be featured.</p>
+    <a class="caps-link report-link" href={url('/photos/report')}>Report a photo</a>
   </section>
 
   <ul class="grid wrap">
@@ -33,6 +34,10 @@ import { links } from '../lib/site';
   .intro {
     padding-top: 72px;
     padding-bottom: 40px;
+  }
+
+  .report-link {
+    margin-top: 18px;
   }
 
   .lead a {

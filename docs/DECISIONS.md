@@ -206,6 +206,20 @@ Open questions that still need an answer live at the end of this file.
 - **Why:** Lets donors and prospective members see how much ISA does over time. The design spec avoided statistics; per-program session counts are a deliberate, light exception because they summarize real calendar history rather than marketing numbers.
 - **Consequences:** The archive is only as good as the calendar. Events deleted from Google Calendar disappear from the archive at the next rebuild, so past events should be left on the calendar.
 
+## D-031 · Feedback form that emails the e-board
+- **Date:** 2026-10-16
+- **Decided by:** Mahdi Rizk
+- **Decision:** A feedback page (`/feedback/`) for corrections, bugs and ideas, linked from every page's footer with the current page pre-selected. Messages go to the e-board inbox through Web3Forms, a free form-to-email service, once its access key is added to `content.json`. Until then, sending opens the visitor's email app with the message filled in.
+- **Alternatives:** A `mailto:` link only (fails for people without a desktop email app); a Google Form (leaves the site, can't match the design); Formspree (smaller free tier, needs an account login).
+- **Why:** The site is static and has no server to send email. Web3Forms needs no login, ties the key to the e-board inbox rather than a person, and its free tier (about 250 messages a month) is far more than ISA needs. The key is designed to be public.
+- **Consequences:** Someone with access to the e-board inbox has to create the key (see README.md › Feedback and photo reports). Spam protection is a hidden honeypot field; if spam becomes a problem, rotate the key.
+
+## D-032 · Photo report form
+- **Date:** 2026-10-16
+- **Decided by:** Mahdi Rizk
+- **Decision:** `/photos/report/` lets anyone pick a photo from a grid, give a reason, and optionally a name. The email names the exact file to remove. Linked from the Photos page and the feedback page; `?photo=<id>` pre-selects a photo.
+- **Why:** Easier and more precise than describing a photo in a general feedback message.
+
 ---
 
 ## Open questions
@@ -226,3 +240,4 @@ Open questions that still need an answer live at the end of this file.
 | Q-12 | Pin-up board placement | 2026-10-15 | Resolved by D-017 |
 | Q-13 | Keeping scheduled rebuilds running over summer | 2026-10-15 | Resolved by D-027 |
 | Q-14 | Tuesday schedule: the site says "Book Club & Dua Tawassul, every other Tuesday"; the planning notes say Dua Tawassul alternates with Book Club; the calendar lists Book Club weekly in November. What is the actual Tuesday rhythm? | 2026-10-15 | Open |
+| Q-15 | Who will create the Web3Forms key? It is emailed to the e-board inbox, so it needs someone with access to that inbox. | 2026-10-16 | Open |
